@@ -111,6 +111,14 @@ endif
 set winheight=35
 :silent! set winminheight=5
 
+
+" highlight current line, but only in active window #Stolen from anishathalye
+augroup CursorLineOnlyInActiveWindow
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
+
 " Workspace Properties {{{
 set guioptions=
 "set lines=50

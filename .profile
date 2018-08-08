@@ -9,6 +9,8 @@ alias ci="code-insiders"
 alias cia="code-insiders -a"
 # add alias field = aws print %1
 alias strip-ht="col -xb"
+alias vimrc="vim ~/.vim/vimrc"
+alias zshrc="vim ~/.zshrc"
 
 # Enhanced
 alias tre="tree -F -L 1"
