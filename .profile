@@ -11,6 +11,7 @@ alias cia="code-insiders -a"
 alias strip-ht="col -xb"
 alias vimrc="vim ~/.vim/vimrc"
 alias zshrc="vim ~/.zshrc"
+alias bashrc="vim ~/.bashrc"
 
 # Enhanced
 alias tre="tree -F -L 1"
