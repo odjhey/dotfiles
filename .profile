@@ -22,8 +22,9 @@ alias fzf="fzf --height 50%"
 alias toplain="perl -pe 's/\x1b\[[0-9;]*[mG]//g'"
 
 # Go Lang
-# export GOPATH="$HOME/proj/golang"
-# export PATH="$PATH:$GOPATH/bin"
+export GOPATH="$HOME/.golang"
+export PATH="$PATH:$GOPATH/bin"
+export GOROOT="$(brew --prefix golang)/libexec"
 
 # ADB
 export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
