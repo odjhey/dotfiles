@@ -137,7 +137,7 @@ prompt_odz_setup() {
     pc[line]='magenta'
     pc[hist]='green'
     pc[path]='cyan'
-    pc[shortpath]='default'
+    pc[shortpath]='white'
     pc[rc]='red'
     pc[scm_branch]='cyan'
     pc[scm_commitid]='yellow'
@@ -301,6 +301,7 @@ prompt_wunjo_scm_branch() {
 	pc=(${(kv)wunjo_prompt_colors})
 
 	echo -n "$pc[punc]$pc[scm_branch]$(zgit_head)"
+  echo -n "$pc[reset]|$(prompt_odz_scm_time_since_commit)"
 
 	if zgit_inworktree; then
 		if ! zgit_isindexclean; then
