@@ -79,3 +79,9 @@ export GOROOT="$(brew --prefix golang)/libexec"
 
 # ADB
 export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
+
+
+
+# MacOS
+alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
