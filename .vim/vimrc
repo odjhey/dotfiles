@@ -11,10 +11,11 @@ set t_Co=256
 
 " }}}
 
-" use plug for fzf
-call plug#begin('~/.vim/plugged')
-Plug '/usr/local/opt/fzf'
-call plug#end()
+"" use plug for fzf
+"call plug#begin('~/.vim/plugged')
+"Plug '/usr/local/opt/fzf'
+"call plug#end()
+set rtp+=/usr/local/opt/fzf
 
 " use pathogen
 execute pathogen#infect()
