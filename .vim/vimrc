@@ -1,59 +1,48 @@
-" Odjhey .vimrc file
+" Odjhey .vimrc
+" https://github.com/odjhey/dotfiles
 
-
-" Bootstrap {{{
-
-"vi is old. use vim
-set nocompatible
-"refresh autocmd
-autocmd! 
+set nocompatible "vi is old. use vim
+"refresh auto cmd
+autocmd!         
 set t_Co=256
-
-" }}}
-
-"" use plug for fzf
-"call plug#begin('~/.vim/plugged')
-"Plug '/usr/local/opt/fzf'
-"call plug#end()
-set rtp+=/usr/local/opt/fzf
 
 " use pathogen
 execute pathogen#infect()
+set rtp+=/usr/local/opt/fzf
 
-""""""""""""""""""""""""""""""""""""""""
-" Basic Editing Config
-""""""""""""""""""""""""""""""""""""""""
-" allow unsaved background buffers and remember marks/undo for them
-set hidden
-" remember more commands and search history
-set history=10000
-
+set hidden " allow unsaved background buffers and remember marks/undo for them 
+set history=10000 " remember more commands and search history
 set expandtab 
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
 syntax on
 filetype plugin indent on
-" set autoindent
+set autoindent " follow indent of previous line
 set scrolloff=5
-
 set incsearch
 set hlsearch
-" make searches case-sensitive only if they contain upper-case characters
-set ignorecase smartcase
-
+set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
+set title " show filename on titlebar
 " unhighlight on Enter
-nnoremap <CR> :nohlsearch<CR>
+nnoremap <CR> :nohlsearch<CR> 
+set report=0    " Report the number of lines changed. (substitute)
+set ttyfast
+set wildmenu    " Use <tab> when completing a command in cli
 
 " LOL got these from TPOPE - QoL
 nnoremap Y  y$
 inoremap <C-C> <Esc>`^
 
+" Navigation
+" Speed up viewport scrolling
+nnoremap <C-e> 4<C-e>
+nnoremap <C-y> 4<C-y>
+
 " Does not work as i like - weird
 " vnoremap     <M-<> <gv
 " vnoremap     <M->> >gv
 " vnoremap     <Space> I<Space><Esc>gv
-
 
 " -*- vim -*- vim:set ft=vim et sw=2 sts=2:
 " -*- vim -*- vim:set ft=vim et sw=2 sts=2:
@@ -74,10 +63,12 @@ set nobackup
 set nowritebackup
 set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
 set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip+=/safe/*
+set directory=~/.vim/swaps     " Set directory for swap files.
 
 
 set showcmd
-set noshowmode
+set noshowmode "don't show mode, cause airline
 
 " If a file is changed outside of vim, automatically reload it without asking
 set autoread
@@ -102,6 +93,9 @@ nnoremap <c-t> :FZF<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 "}}}
+
+"insert new line
+map <leader><Enter> o<ESC> 
 
 " Ag instead of Ack
 if executable('ag')
@@ -135,7 +129,7 @@ set nu "Ruler (vertical)
 "set encoding=utf-8
 set nowrap
 set list
-set listchars=tab:→\ ,eol:¬,extends:>,precedes:<
+set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·
 set cursorline
 "Text Display
 "if has("gui_macvim")
@@ -228,6 +222,7 @@ augroup END
 " Insert only one space when joining lines that contain sentence-terminating
 " punctuation like `.`.
 set nojoinspaces
+set nostartofline
 " }}}
 " Custom Funcs {{{
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -385,4 +380,11 @@ let g:surround_{char2nr('=')} = "<%= \r %>"
 let g:surround_{char2nr('8')} = "/* \r */"
 let g:surround_{char2nr('s')} = " \r"
 let g:surround_{char2nr('^')} = "/^\r$/"
+
+" Notes.vim {{{
+augroup notes_config
+  autocmd!
+  let g:notes_directories = ['~/Dropbox/Notes']
+augroup END
+" }}}
 

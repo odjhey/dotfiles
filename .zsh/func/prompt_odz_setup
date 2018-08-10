@@ -168,7 +168,7 @@ prompt_odz_setup() {
 	fi
 
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
-  PROMPT+="($pc[scm_branch]\$(prompt_wunjo_scm_branch)$pc[reset])"
+  PROMPT+="$pc[scm_branch]\$(prompt_odz_scm_info)$pc[reset]"
 	PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT
@@ -301,7 +301,7 @@ prompt_wunjo_scm_branch() {
 	pc=(${(kv)wunjo_prompt_colors})
 
 	echo -n "$pc[punc]$pc[scm_branch]$(zgit_head)"
-  echo -n "$pc[reset]|$(prompt_odz_scm_time_since_commit)"
+# echo -n "$pc[reset]|$(prompt_odz_scm_time_since_commit)"
 
 	if zgit_inworktree; then
 		if ! zgit_isindexclean; then
