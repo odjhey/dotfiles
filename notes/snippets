@@ -1,9 +1,0 @@
-
-du -chs ./*
-- list dir sizes
-
-xargs -0
-- use nulls
-
-tr
-- transform chars
