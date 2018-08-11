@@ -47,4 +47,7 @@ PS1="${GREEN}\h:${WHITE}\W${RESET}\$(grb_git_prompt) ${BRIGHT_GREEN}\$${RESET} "
 source ~/bin/git-completion.bash
 eval "$(pandoc --bash-completion)"
 
+[ -f ~/.fzf/.fzf.bash ] && source ~/.fzf/.fzf.bash
+
 . ~/.profile
+

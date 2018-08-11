@@ -62,4 +62,7 @@ function up()
     test $DIR != "/" && echo $DIR/$TARGET
 }
 
+[ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
+
 . ~/.profile
+
