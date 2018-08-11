@@ -1,5 +1,8 @@
 #!/usr/bin/python
 
+# By Gary Bernhardt.
+# Dotfiles at: https://github.com/garybernhardt/dotfiles
+
 #
 # Print a diff summary like:
 #
