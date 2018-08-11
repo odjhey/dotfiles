@@ -83,7 +83,11 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 
 # FZF and fd
 # Setting fd as the default source for fzf
-export FZF_DEFAULT_COMMAND='fd --type f --hidden'
+export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
+
+
+# Cucumber console color
+export CUCUMBER_COLORS=comment=white

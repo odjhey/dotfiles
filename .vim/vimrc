@@ -167,7 +167,7 @@ let mapleader = " "
 
 "this bind is for folding using space
 "nnoremap <Space> za    
-"nnoremap <leader><leader> <C-^>
+nnoremap <leader><CR> <C-^>
 
 "}}}
 " Unbind Sh**y keys {{{
