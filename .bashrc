@@ -1,6 +1,5 @@
 # Odjhey: Bashrc
 # Mostly from failbowl garybernhardt
-
 . ~/bin/bash_colors.sh
 
 # Unbreak broken, non-colored terminal
@@ -29,14 +28,14 @@ grb_git_prompt() {
     local g="$(__gitdir)"
     if [ -n "$g" ]; then
         local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
-        if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
+        if [ "$MINUTES_SINCE_LAST_COMMIT" -gt 60 ]; then
             local COLOR=${RED}
-        elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 10 ]; then
+        elif [ "$MINUTES_SINCE_LAST_COMMIT" -gt 30 ]; then
             local COLOR=${YELLOW}
         else
             local COLOR=${GREEN}
         fi
-        local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)m${NORMAL}"
+        local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)${NORMAL}"
         # The __git_ps1 function inserts the current git branch where %s is
         local GIT_PROMPT=`__git_ps1 "(%s|${SINCE_LAST_COMMIT})"`
         echo ${GIT_PROMPT}

@@ -168,7 +168,7 @@ prompt_odz_setup() {
 	fi
 
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
-  PROMPT+="$pc[scm_branch]\$(prompt_odz_scm_info)$pc[reset]"
+  PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
 	PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT

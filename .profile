@@ -2,7 +2,6 @@
 # Overrides
 USER="Odz"
 
-
 # rm, cp, mv
 alias mv="mv -v"
 alias cp="cp -v"
@@ -11,6 +10,7 @@ alias rm="rm -v"
 # git
 alias groot='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias gitl='git log --format=oneline'
+alias gits='git status'
 # git commit browser. needs fzf
 glog() {
   git log --graph --color=always \
@@ -20,8 +20,6 @@ glog() {
                 echo '{}' | grep -o '[a-f0-9]\{7\}' | head -1 |
                 xargs -I % sh -c 'git show --color=always % | less -R'"
 }
-
-
 
 # Shorts
 alias vi="vim"
@@ -79,8 +77,6 @@ export GOROOT="$(brew --prefix golang)/libexec"
 
 # ADB
 export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
-
-
 
 # MacOS
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
