@@ -1,0 +1,16 @@
+[user]
+	name = Odelon Jhey Pacalso
+	email = odjhey@github.com
+[color]
+	ui = auto
+[core]
+	editor = vim
+	excludesfile = /Users/Odz/.gitignore_global
+[merge]
+  tool = vimdiff
+[alias]
+  l=log --pretty=oneline
+  s=status
+
+[github]
+	user = odjhey

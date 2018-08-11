@@ -24,7 +24,7 @@ function minutes_since_last_commit {
     minutes_since_last_commit=$((seconds_since_last_commit/60))
     echo $minutes_since_last_commit
 }
-grb_git_prompt() {
+odz_git_prompt() {
     local g="$(__gitdir)"
     if [ -n "$g" ]; then
         local MINUTES_SINCE_LAST_COMMIT=`minutes_since_last_commit`
@@ -37,11 +37,12 @@ grb_git_prompt() {
         fi
         local SINCE_LAST_COMMIT="${COLOR}$(minutes_since_last_commit)${NORMAL}"
         # The __git_ps1 function inserts the current git branch where %s is
-        local GIT_PROMPT=`__git_ps1 "(%s|${SINCE_LAST_COMMIT})"`
+        local GIT_PROMPT=`__git_ps1 "(${BRIGHT_WHITE}%s${BLACK}|${SINCE_LAST_COMMIT})"`
         echo ${GIT_PROMPT}
     fi
 }
-PS1="${GREEN}\h:${WHITE}\W${RESET}\$(grb_git_prompt) ${BRIGHT_GREEN}\$${RESET} "
+PS1="${GREEN}\h:${NORMAL}\W${RESET}"
+PS1+="\$(odz_git_prompt) ${BRIGHT_YELLOW}\$${RESET} "
 
 # Completion
 source ~/bin/git-completion.bash

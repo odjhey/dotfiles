@@ -148,6 +148,7 @@ else
   "colorscheme pablo
   "colorscheme badwolf
   let g:gruvbox_contrast_dark = "hard"
+  let g:gruvbox_contrast_soft = "hard"
   colorscheme gruvbox
   "colorscheme sift
   "colorscheme base

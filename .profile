@@ -1,16 +1,24 @@
 
 # Overrides
-USER="Odz"
+USER="Stash"
 
 # rm, cp, mv
 alias mv="mv -v"
 alias cp="cp -v"
 alias rm="rm -v"
 
+# nav - some of these are already in zsh
+alias ..="cd .."
+alias cd..="cd .."
+alias ...="cd ../.."
+alias -- -="cd -"
+alias cdd="cd $HOME/Desktop"
+alias cddl="cd $HOME/Downloads"
+alias cdp="cd '$ODJ_PDIR'"
+export ODJ_PDIR="$HOME/proj"
+
 # git
-alias groot='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
-alias gitl='git log --format=oneline'
-alias gits='git status'
+alias cdgr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 # git commit browser. needs fzf
 glog() {
   git log --graph --color=always \
@@ -42,7 +50,7 @@ alias toplain="perl -pe 's/\x1b\[[0-9;]*[mG]//g'"
 
 
 # @PualIrish
-# who is using the laptop's iSight camera?
+# who is using the laptops iSight camera?
 camerausedby() {
 	echo "Checking to see who is using the iSight camera… 📷"
 	usedby=$(lsof | grep -w "AppleCamera\|USBVDC\|iSight" | awk '{printf $2"\n"}' | xargs ps)
@@ -79,15 +87,11 @@ export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
 # MacOS
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
 
-
-
 # FZF and fd
 # Setting fd as the default source for fzf
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-
-
 
 # Cucumber console color
 export CUCUMBER_COLORS=comment=white

@@ -169,7 +169,8 @@ prompt_odz_setup() {
 
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
   PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
-	PROMPT+=" $pc[#]\$$pc[reset] "
+# PROMPT+=" $pc[#]\$$pc[reset] "
+  PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT
 	precmd_functions+='prompt_wunjo_precmd'

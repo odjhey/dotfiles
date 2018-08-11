@@ -1,0 +1,7 @@
+--langdef=abap
+--langmap=abap:.abap
+--regex-abap=/^[dD][eE][fF][iI][nN][eE][ \t]*([a-zA-Z0-9_]+)/\1/d,define/
+--regex-abap=/^[cC][lL][aA][sS][sS][ \t]*([a-zA-Z0-9_]+)/\1/c,class/
+--regex-abap=/^[mM][oO][dD][uU][lL][eE][ \t]*([a-zA-Z0-9_]+)/\1/m,module/
+--regex-abap=/^[fF][oO][rR][mM][ \t]*([a-zA-Z0-9_]+)/\1/f,form/
+--regex-abap=/^[mM][eE][tT][hH][oO][dD][ \t]*([a-zA-Z0-9_]+)/\1/m,method/
