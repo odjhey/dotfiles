@@ -68,8 +68,6 @@ cp_p () {
   rsync -WavP --human-readable --progress $1 $2
 }
 
-
-
 # Go Lang
 export GOPATH="$HOME/.golang"
 export PATH="$PATH:$GOPATH/bin"
@@ -80,3 +78,12 @@ export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
 
 # MacOS
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
+
+
+
+# FZF and fd
+# Setting fd as the default source for fzf
+export FZF_DEFAULT_COMMAND='fd --type f --hidden'
+# To apply the command to CTRL-T as well
+export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
