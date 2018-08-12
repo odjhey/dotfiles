@@ -11,6 +11,8 @@
 [alias]
   l=log --pretty=oneline
   s=status
+  ci=commit -m
+  amend=commit --amend
 
 [github]
 	user = odjhey
