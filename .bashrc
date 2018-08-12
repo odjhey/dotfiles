@@ -44,6 +44,11 @@ odz_git_prompt() {
 PS1="${GREEN}\h:${NORMAL}\W${RESET}"
 PS1+="\$(odz_git_prompt) ${BRIGHT_YELLOW}\$${RESET} "
 
+miniprompt() {
+  unset PROMPT_COMMAND
+  PS1="\[\e[38;5;168m\]> \[\e[0m\]"
+}
+
 # Completion
 source ~/bin/git-completion.bash
 eval "$(pandoc --bash-completion)"

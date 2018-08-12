@@ -1,6 +1,10 @@
 
+
+
+
 # Overrides
-USER="Stash"
+USER="Odz"
+export EDITOR=vim
 
 # rm, cp, mv
 alias mv="mv -v"
@@ -10,6 +14,7 @@ alias rm="rm -v"
 # nav - some of these are already in zsh
 alias ..="cd .."
 alias cd..="cd .."
+alias cd.="cd .."
 alias ...="cd ../.."
 alias -- -="cd -"
 alias cdd="cd $HOME/Desktop"
@@ -17,8 +22,19 @@ alias cddl="cd $HOME/Downloads"
 alias cdp="cd '$ODJ_PDIR'"
 export ODJ_PDIR="$HOME/proj"
 
+# ls
+# use coreutils ls if available
+# hash gls >/dev/null 2>&1 || alias gls="ls"
+ls='ls -G'
+l='ls -lah'
+la='ls -lAh'
+ll='ls -lh'
+lsa='ls -lah'
+
 # git
+alias g='git'
 alias cdgr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
+alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 # git commit browser. needs fzf
 glog() {
   git log --graph --color=always \
@@ -29,16 +45,28 @@ glog() {
                 xargs -I % sh -c 'git show --color=always % | less -R'"
 }
 
+# FZF
+fq() {
+  fzf -q "$@"
+}
+
+# More FZF <3 Git
+[ -f ~/.fzf/.functions ] && source ~/.fzf/.functions
+
 # Shorts
 alias vi="vim"
+alias v="vim"
+vq() {
+  $EDITOR `$@`
+}
 alias ctags="`brew --prefix`/bin/ctags"
 alias ci="code-insiders"
 alias cia="code-insiders -a"
 # add alias field = aws print %1
 alias strip-ht="col -xb"
-alias vimrc="vim ~/.vim/vimrc"
-alias zshrc="vim ~/.zshrc"
-alias bashrc="vim ~/.bashrc"
+alias vimrc="$EDITOR ~/.vim/vimrc"
+alias zshrc="$EDITOR ~/.zshrc"
+alias bashrc="$EDITOR ~/.bashrc"
 
 # Enhanced
 alias tre="tree -F -L 1"
@@ -75,6 +103,29 @@ function whois() {
 cp_p () {
   rsync -WavP --human-readable --progress $1 $2
 }
+
+# Thanks! https://github.com/junegunn/dotfiles
+chist() {
+  local cols sep
+  export cols=$(( COLUMNS / 3 ))
+  export sep='{::}'
+
+  cp -f ~/Library/Application\ Support/Google/Chrome/Default/History /tmp/h
+  sqlite3 -separator $sep /tmp/h \
+    "select title, url from urls order by last_visit_time desc" |
+  ruby -ne '
+    cols = ENV["cols"].to_i
+    title, url = $_.split(ENV["sep"])
+    len = 0
+    puts "\x1b[36m" + title.each_char.take_while { |e|
+      if len < cols
+        len += e =~ /\p{Han}|\p{Katakana}|\p{Hiragana}|\p{Hangul}/ ? 2 : 1
+      end
+    }.join + " " * (2 + cols - len) + "\x1b[m" + url' |
+  fzf --ansi --multi --no-hscroll --tiebreak=index |
+  sed 's#.*\(https*://\)#\1#' | xargs open
+}
+
 
 # Go Lang
 export GOPATH="$HOME/.golang"
