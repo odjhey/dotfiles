@@ -1,4 +1,5 @@
 
+/.vscode/
 **/node_modules
 .CFUserTextEncoding
 .DS_Store
@@ -70,7 +71,6 @@
 .v8flags.5.8.283.41.7d327039df77b9766185ad9514cfafd7.json
 .vim-tmp/
 .viminfo
-.vscode/
 .vscode-insiders/
 .webclipse/
 .webclipse.properties

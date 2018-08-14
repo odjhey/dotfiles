@@ -116,6 +116,23 @@ chist() {
   sed 's#.*\(https*://\)#\1#' | xargs open
 }
 
+# Viber search using FZF
+fzvibe() {
+  cp -f ~/Library/Application\ Support/ViberPC/639154666405/viber.db /tmp/viber.db
+  sqlite3 /tmp/viber.db 'select replace( ( messageinfo.body || ">" || contact.clientname || "#" || number ), char(10), " " )
+                              from messageinfo 
+                              inner join contact 
+                                on messageinfo.contactid = contact.contactid
+                              and messageinfo.body is not null
+                              and messageinfo.body != ""
+                              and ( contact.clientname is not null
+                                or contact.number is not null 
+                                or contact.name is not null
+                              )' |
+                           uniq |
+                           fzf --ansi --multi --no-hscroll --tiebreak=index 
+}
+
 # Go Lang
 export GOPATH="$HOME/.golang"
 export PATH="$PATH:$GOPATH/bin"
