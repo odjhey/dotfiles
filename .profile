@@ -118,7 +118,7 @@ chist() {
 
 # Viber search using FZF
 fzvibe() {
-  cp -f ~/Library/Application\ Support/ViberPC/639154666405/viber.db /tmp/viber.db
+  command cp -f ~/Library/Application\ Support/ViberPC/639154666405/viber.db /tmp/viber.db
   sqlite3 /tmp/viber.db 'select replace( ( messageinfo.body || ">" || contact.clientname || "#" || number ), char(10), " " )
                               from messageinfo 
                               inner join contact 
