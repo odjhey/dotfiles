@@ -135,7 +135,7 @@ fzvibe() {
 }
 
 # Go Lang
-export GOPATH="$HOME/.golang"
+export GOPATH="$HOME/golang"
 export PATH="$PATH:$GOPATH/bin"
 export GOROOT="$(brew --prefix golang)/libexec"
 

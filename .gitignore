@@ -20,7 +20,7 @@
 .stack/
 .ghc/
 .clojure_history
-.golang/
+golang/
 .cocoapods/
 .config/
 .cups/
