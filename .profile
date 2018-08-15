@@ -52,6 +52,7 @@ alias ctags="`brew --prefix`/bin/ctags"
 alias ci="code-insiders"
 alias cia="code-insiders -a"
 # add alias field = aws print %1
+alias surround="sed -e \"s/\\(.*\\)/'\\1'/\""
 alias strip-ht="col -xb"
 
 # fast conf edit
@@ -149,3 +150,7 @@ alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resource
 export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 # To apply the command to CTRL-T as well
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
+
+
+[ -f ~/safe/.aliases ] && source ~/safe/.aliases
+[ -f ~/safe/.functions ] && source ~/safe/.functions
