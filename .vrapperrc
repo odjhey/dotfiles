@@ -1,0 +1,4 @@
+set smartcase
+set hlsearch
+set startnormalmode
+set nolist

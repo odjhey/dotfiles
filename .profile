@@ -51,6 +51,7 @@ fq() {
 # vim
 alias vi="vim"
 alias v="vim"
+alias vipb="pbpaste | vi -"
 vq() {
   $EDITOR `$@`
 }
