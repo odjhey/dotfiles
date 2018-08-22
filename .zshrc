@@ -64,4 +64,4 @@ function up()
 
 [ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
-. ~/.profile
+[ -f ~/.profile ] && source ~/.profile

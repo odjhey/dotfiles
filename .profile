@@ -16,9 +16,8 @@ alias cddl="cd $HOME/Downloads"
 alias cdp="cd $HOME/proj"
 cdgo() {
   cd "$GOPATH/src/github.com/"
-  if [ -z "$@" ]
+  if ! ( [ -z "$@" ] )
   then 
-  else
     cd "$@"
   fi
 }
