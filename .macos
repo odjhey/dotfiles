@@ -179,6 +179,10 @@ defaults write com.apple.dock autohide -bool true
 # Make Dock icons of hidden applications translucent
 defaults write com.apple.dock showhidden -bool true
 
+# Hide other entries in the Dock when a Dock Icon is clicked
+# aka 1 App mode
+defaults write com.apple.dock single-app -bool TRUE; killall Dock
+
 
 ###############################################################################
 # Terminal & iTerm 2                                                          #
