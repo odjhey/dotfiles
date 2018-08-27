@@ -142,6 +142,11 @@ fzvibe() {
                            fzf --ansi --multi --no-hscroll --tiebreak=index 
 }
 
+# thanks https://unix.stackexchange.com/questions/31414/how-can-i-pass-a-command-line-argument-into-a-shell-script
+csv2tab () {
+	column -s, -t < $1 | less -#2 -N -S
+}
+
 # Go Lang
 export GOPATH="$HOME/golang"
 export PATH="$PATH:$GOPATH/bin"
