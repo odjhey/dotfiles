@@ -110,7 +110,7 @@ writeups/
 z/
 safe/
 notes/
-
+.electron/
 .rainbow_oauth
 
 **.old
