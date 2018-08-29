@@ -112,6 +112,7 @@ safe/
 notes/
 .electron/
 .rainbow_oauth
+.gitkraken/
 
 **.old
 **.log
