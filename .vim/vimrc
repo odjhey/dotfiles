@@ -29,6 +29,7 @@ nnoremap <CR> :nohlsearch<CR>
 set report=0    " Report the number of lines changed. (substitute)
 set ttyfast
 set wildmenu    " Use <tab> when completing a command in cli
+set showmatch
 
 " LOL got these from TPOPE - QoL
 nnoremap Y  y$

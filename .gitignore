@@ -113,6 +113,7 @@ notes/
 .electron/
 .rainbow_oauth
 .gitkraken/
+*.dump
 
 **.old
 **.log
