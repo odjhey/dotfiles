@@ -11,8 +11,9 @@
 [alias]
   l=log --pretty=oneline
   s=status
-  ci=commit -m
+  cm=commit -m
   amend=commit --amend
+  d=diff
 
 [github]
 	user = odjhey
