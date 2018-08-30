@@ -125,6 +125,7 @@ set splitbelow
 set splitright
 set nu "Ruler (vertical)
 "set relativenumber
+set norelativenumber
 "}}}
 " File Type Properties  {{{
 "set encoding=utf-8
@@ -389,4 +390,11 @@ augroup notes_config
   let g:notes_directories = ['~/Dropbox/Notes']
 augroup END
 " }}}
+
+
+
+" Match it
+packadd! matchit
+
+
 
