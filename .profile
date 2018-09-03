@@ -147,6 +147,11 @@ csv2tab () {
 	column -s, -t < $1 | less -#2 -N -S
 }
 
+# 
+# Mass replace
+agr () { ag -0 -l "$1" | xargs -0 perl -pi.bak -e "s/$1/$2/g"; }
+
+
 # Go Lang
 export GOPATH="$HOME/golang"
 export PATH="$PATH:$GOPATH/bin"
