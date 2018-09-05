@@ -128,7 +128,7 @@ set nu "Ruler (vertical)
 set norelativenumber
 "}}}
 " File Type Properties  {{{
-"set encoding=utf-8
+set encoding=utf-8 nobomb
 set nowrap
 set list
 set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·
