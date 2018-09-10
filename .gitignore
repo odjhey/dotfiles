@@ -114,6 +114,7 @@ notes/
 .rainbow_oauth
 .gitkraken/
 *.dump
+OneDrive/
 
 **.old
 **.log
