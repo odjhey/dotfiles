@@ -117,6 +117,7 @@ notes/
 OneDrive/
 .iterm2/
 .iterm2_shell_integration.zsh
+.spacemacs
 
 **.old
 **.log
