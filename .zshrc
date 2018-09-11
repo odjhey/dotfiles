@@ -65,3 +65,6 @@ function up()
 [ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
 [ -f ~/.profile ] && source ~/.profile
+
+test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
+
