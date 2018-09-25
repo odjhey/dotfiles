@@ -1,2 +1,2 @@
-# Careful! Do not blindly copy and paste.
+# Here be dragons.
 
