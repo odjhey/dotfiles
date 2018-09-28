@@ -118,6 +118,8 @@ OneDrive/
 .iterm2/
 .iterm2_shell_integration.zsh
 .spacemacs
+.shpotify.cfg
+.bitbar/
 
 **.old
 **.log

@@ -1,5 +1,8 @@
 export EDITOR=vim
 
+# custom scripts
+export PATH="$PATH:$HOME/bin:$HOME/bin/scripts"
+
 # rm, cp, mv
 alias mv="mv -v"
 alias cp="cp -v"
@@ -54,6 +57,8 @@ alias vipb="pbpaste | vi -"
 vq() {
   $EDITOR `$@`
 }
+
+alias emacs="emacs-26.1"
 
 # shorts
 alias ctags="`brew --prefix`/bin/ctags"
