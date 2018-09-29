@@ -63,6 +63,7 @@ vq() {
 # emacs
 alias e="emacs -nw"
 alias ec="emacsclient"
+alias bemacsd="brew services restart emacs-plus"
 
 # shorts
 alias ctags="`brew --prefix`/bin/ctags"

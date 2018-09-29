@@ -53,6 +53,7 @@
     which-key
     ;; profile emacs
     benchmark-init
+    exec-path-from-shell
     ))
 
 (dolist (p my-packages)

@@ -1,3 +1,7 @@
+;; shell
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
@@ -47,6 +51,9 @@
 
 ;;Enable Narrow To Region
 (put 'narrow-to-region 'disabled nil)
+;;Nice auto complete
+(setq tab-always-indent 'complete)
+(add-to-list 'completion-styles 'initials t)
 
 ;; y/n over yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
