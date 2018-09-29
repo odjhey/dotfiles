@@ -120,6 +120,7 @@ OneDrive/
 .spacemacs
 .shpotify.cfg
 .bitbar/
+.offlineimaprc
 
 **.old
 **.log

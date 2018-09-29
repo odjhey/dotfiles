@@ -93,6 +93,7 @@ set re=1
 nnoremap <c-t> :FZF<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
+nnoremap <c-b> :Buffer<CR>
 "}}}
 
 "insert new line

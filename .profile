@@ -58,7 +58,8 @@ vq() {
   $EDITOR `$@`
 }
 
-alias emacs="emacs-26.1"
+# emacs
+alias e="emacs -nw"
 
 # shorts
 alias ctags="`brew --prefix`/bin/ctags"
