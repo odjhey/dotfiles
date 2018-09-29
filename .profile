@@ -1,3 +1,5 @@
+
+# TODO add check if has emacs daemon then use emacsclient else use vim
 export EDITOR=vim
 
 # custom scripts
@@ -60,6 +62,7 @@ vq() {
 
 # emacs
 alias e="emacs -nw"
+alias ec="emacsclient"
 
 # shorts
 alias ctags="`brew --prefix`/bin/ctags"

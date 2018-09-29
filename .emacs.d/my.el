@@ -1,17 +1,32 @@
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
-
-(evil-mode 1)
+(setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
 (load-theme 'spacemacs-dark)
+
+;;c-z to escape to shell
+;;https://stackoverflow.com/questions/26666608/bind-c-z-in-evil-mode-to-escape-to-shell
+(setq evil-toggle-key ""); remove default evil-toggle-key C-z, manually setup later
+(setq evil-toggle-key "C-x C-z")
+(evil-mode 1)
 
 (ivy-mode 1)
 (beacon-mode 1)
 
-(rainbow-delimiters-mode 1)
-(rainbow-mode)
+;;Do not display GUI Toolbar
+(tool-bar-mode 0)
+(menu-bar-mode -1) 
+(toggle-scroll-bar -1) 
+
+(add-to-list 'default-frame-alist
+             '(ns-transparent-titlebar . t))
+(add-to-list 'default-frame-alist
+             '(ns-appearance . dark)) ;; or dark - depending on your theme
+
 
 ;;Gargabe Collection
-;;Allow 20MB of memory (instead of 0.76MB) before calling garbage collection. This means GC runs less often, which speeds up some operations.
+;;Allow 20MB of memory (instead of 0.76MB) before calling garbage
+;;collection. This means GC runs less often, which speeds up some
+;;operations.
 (setq gc-cons-threshold 20000000)
 
 ;;Do not create backup files
@@ -30,6 +45,9 @@
 ;;Don’t assume that sentences should have two spaces after periods.
 (setq sentence-end-double-space nil)
 
+;;Enable Narrow To Region
+(put 'narrow-to-region 'disabled nil)
+
 ;; y/n over yes/no
 (fset 'yes-or-no-p 'y-or-n-p)
 
@@ -40,11 +58,6 @@
 (define-key global-map (kbd "C-1") 'text-scale-increase)
 (define-key global-map (kbd "C-0") 'text-scale-decrease)
 
-;;Do not display GUI Toolbar
-(tool-bar-mode 0)
-
-
-;; todo (hide all bars)
 
 ;;Remember the cursor position of files when reopening them
 (setq save-place-file "~/.emacs.d/saveplace")
@@ -98,3 +111,7 @@
 
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
+
+;;(rainbow-delimiters-mode 1)
+;;(rainbow-mode 1)
+

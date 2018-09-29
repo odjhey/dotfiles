@@ -50,6 +50,9 @@
     auto-complete
     comment-tags
     evil-magit
+    which-key
+    ;; profile emacs
+    benchmark-init
     ))
 
 (dolist (p my-packages)
@@ -58,6 +61,8 @@
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
+
+(require 'benchmark-init)
 
 (load-file 
   (concat 
