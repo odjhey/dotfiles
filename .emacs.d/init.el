@@ -27,43 +27,59 @@
 ;; manually with M-x package-install
 ;; Add in your own as you wish:
 (defvar my-packages
-  '(;; makes handling lisp expressions much, much easier
+  '(
+    ag
+    ;; makes handling lisp expressions much, much easier
     ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
     paredit
-    ;; colorful parenthesis matching
-    rainbow-delimiters
-    ;; try helm later?
-    ivy
-    ;; emulate vi here
+    ivy counsel swiper ;; try helm later?
     evil
-    ;; sane org mode on evil
-    org-evil
-    ;; evil collection
-    ;; evil-collection
-    spaceline
-    ;;
-    beacon
-    ;;
-    browse-kill-ring
-    ;;
     evil-surround ;;like tpopes vim surround coool!
+    evil-mc ;;multi cursor
+    evil-numbers
+
     auto-complete
+    beacon ;; blink blink
+    browse-kill-ring
     comment-tags
-    evil-magit
-    which-key
-    ;; profile emacs
-    benchmark-init
     exec-path-from-shell
+    ;; ledger-mode ;;ledger = command line accounting
+    projectile
+    markdown-mode
+    rainbow-delimiters
+    spaceline
+    web-mode
+    which-key
+    ;; benchmark-init ;; profile emacs
+    pdf-tools
     ))
 
+;; (dolist (p my-packages)
+;;   (when (not (package-installed-p p))
+;;     (package-install p)))
 (dolist (p my-packages)
-  (when (not (package-installed-p p))
-    (package-install p)))
+  (unless (package-installed-p p)
+    (package-refresh-contents)
+    (package-install p))
+  (add-to-list 'package-selected-packages p))
 
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file 'noerror)
 
-(require 'benchmark-init)
+
+;;;; (require 'benchmark-init)
+
+;; for some reason this ain't working
+(defun load-directory (dir)
+  (let ((load-it (lambda (f)
+		   (load-file (concat (file-name-as-directory dir) f)))))
+    (mapc load-it (directory-files dir nil "\\.el$"))))
+(load-directory (concat (file-name-directory user-emacs-directory) "lisp/") )
+
+;;(load-file 
+;;  (concat 
+;;    (file-name-directory user-emacs-directory)
+;;    "lisp/abap-mode.el"))
 
 (load-file 
   (concat 

@@ -15,10 +15,6 @@ prompt odz
 autoload -U compinit
 compinit -D
 
-# Add Paths
-export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
-export PATH="$HOME/bin:$PATH"
-
 # better history
 export HISTSIZE=100000
 export HISTFILE="$HOME/.history"
@@ -64,7 +60,7 @@ function up()
 
 [ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
-[ -f ~/.profile ] && source ~/.profile
+# [ -f ~/.profile ] && source ~/.profile
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

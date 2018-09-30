@@ -6,12 +6,16 @@
 (spaceline-spacemacs-theme)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
 (load-theme 'spacemacs-dark)
-
+(setq evil-emacs-state-cursor '("white" (bar . 4)))
 ;;c-z to escape to shell
 ;;https://stackoverflow.com/questions/26666608/bind-c-z-in-evil-mode-to-escape-to-shell
 (setq evil-toggle-key ""); remove default evil-toggle-key C-z, manually setup later
 (setq evil-toggle-key "C-x C-z")
 (evil-mode 1)
+
+(with-eval-after-load 'evil-maps
+  (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
+  (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line))
 
 (ivy-mode 1)
 (beacon-mode 1)
@@ -20,12 +24,17 @@
 (tool-bar-mode 0)
 (menu-bar-mode -1) 
 (toggle-scroll-bar -1) 
+(display-time-mode t)
 
 (add-to-list 'default-frame-alist
              '(ns-transparent-titlebar . t))
 (add-to-list 'default-frame-alist
              '(ns-appearance . dark)) ;; or dark - depending on your theme
 
+;; nav windows and splits using c-<arrow key>
+;; mostly used in <E> mode. 
+(when (fboundp 'windmove-default-keybindings)
+  (windmove-default-keybindings))
 
 ;;Gargabe Collection
 ;;Allow 20MB of memory (instead of 0.76MB) before calling garbage
@@ -71,6 +80,14 @@
 (setq-default save-place t)
 (require 'saveplace)
 
+;;Save History--------------------------------
+;;Save mode-line history between sessions. Very good!
+(setq savehist-additional-variables    ;; Also save ...
+  '(search-ring regexp-search-ring)    ;; ... searches
+  savehist-file "~/.emacs.d/savehist") ;; keep home clean
+(savehist-mode t)                      ;; do this before evaluation
+;;--------------------------------------------
+
 (require 'browse-kill-ring)
 (setq browse-kill-ring-highlight-inserted-item t
       browse-kill-ring-highlight-current-entry nil
@@ -78,10 +95,10 @@
 (define-key browse-kill-ring-mode-map (kbd "j") 'browse-kill-ring-forward)
 (define-key browse-kill-ring-mode-map (kbd "k") 'browse-kill-ring-previous)
 
-
 (require 'evil-surround)
 (global-evil-surround-mode 1)
-
+;; multi cursor
+(global-evil-mc-mode  1)
 
 ;; Multiple Cursors
 ;; https://github.com/gabesoft/evil-mc
@@ -94,19 +111,21 @@
 ;;Enable evil-mc for all buffers
 ;;(global-evil-mc-mode  1)
 
-;;Increment / Decrement numbers
-(global-set-key (kbd "C-=") 'evil-numbers/inc-at-pt)
-(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
-(define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
-(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
+;; look for bindings
+;;;;Increment / Decrement numbers
+;;(global-set-key (kbd "C-=") 'evil-numbers/inc-at-pt)
+;;(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
+;;(define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
+;;(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
 
 ;;Use j/k for browsing wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
 (define-key evil-normal-state-map (kbd "k") 'evil-previous-visual-line)
 
-;;Unbind M-. and M- in evil-mode (goto def, back)
-(define-key evil-normal-state-map (kbd "M-.") nil)
-(define-key evil-normal-state-map (kbd "M-,") nil)
+;;im used to gd
+;;;;Unbind M-. and M- in evil-mode (goto def, back)
+;;(define-key evil-normal-state-map (kbd "M-.") nil)
+;;(define-key evil-normal-state-map (kbd "M-,") nil)
 
 ;;Which Key
 ;;which-key displays available keybindings in a popup.
@@ -119,6 +138,51 @@
 ;; Magit
 (global-set-key (kbd "C-x g") 'magit-status)
 
-;;(rainbow-delimiters-mode 1)
-;;(rainbow-mode 1)
+(rainbow-mode 1)
+(rainbow-delimiters-mode 1)
+
+;; syntax highlights
+(add-to-list 'auto-mode-alist '("\\.abap\\'" . abap-mode))
+
+
+(setq whitespace-display-mappings
+  ;; all numbers are Unicode codepoint in decimal. ⁖ (insert-char 182 1)
+  '(
+    (space-mark 32 [183] [46]) ; 32 SPACE 「 」, 183 MIDDLE DOT 「·」, 46 FULL STOP 「.」
+    ;;(newline-mark 10 [182 10]) ; 10 LINE FEED
+    (newline-mark ?\n    [?¬ ?\n]  [?$ ?\n])	; eol - negation
+    (tab-mark 9 [9655 9] [92 9]) ; 9 TAB, 9655 WHITE RIGHT-POINTING TRIANGLE 「▷」
+    ))
+
+;;Highlight the latest changes in the buffer (like text inserted from:
+;;yank, undo, etc.) until the next command is run. Nice, since it lets
+;;me see exactly what was changed. 
+(when (require 'volatile-highlights nil 'noerror)
+  (volatile-highlights-mode t))
+
+;;Search all open buffers---------------------
+(defun search (regexp)
+  "Search all buffers for a regexp."
+  (interactive "sRegexp to search for: ")
+  (multi-occur-in-matching-buffers ".*" regexp))
+;;--------------------------------------------
+
+;;nuke-all-buffers-----------------------------
+(defun nuke-all-buffers ()
+"Kill all buffers, leaving *scratch* only."
+(interactive)
+(mapc (lambda (x) (kill-buffer x)) (buffer-list)) (delete-other-windows))
+;;---------------------------------------------
+
+;;Kill all other buffers----------------------
+;;kills all buffers, except the current one.
+(defun kill-all-other-buffers ()
+  "Kill all other buffers."
+  (interactive)
+  (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
+;;--------------------------------------------
+
+
+
+
 
