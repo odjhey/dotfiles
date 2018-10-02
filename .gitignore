@@ -121,6 +121,10 @@ OneDrive/
 .bitbar/
 .offlineimaprc
 
+dlclient.history
+dlclient.localstate
+dlgmanager.config
+
 **.old
 **.log
 

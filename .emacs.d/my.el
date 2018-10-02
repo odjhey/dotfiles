@@ -2,9 +2,16 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
+;;(require 'cl)
+;;(require 'powerline)
+(set-frame-font "SourceCodePro+Powerline+Awesome Regular 14" nil t)
+
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
+(setq powerline-default-separator 'slant)
+(spaceline-compile)
+
 (load-theme 'spacemacs-dark)
 (setq evil-emacs-state-cursor '("white" (bar . 4)))
 ;;c-z to escape to shell
@@ -71,13 +78,20 @@
 (global-auto-revert-mode t)
 
 ;; Shortcut for changing font-size
-(define-key global-map (kbd "C-1") 'text-scale-increase)
-(define-key global-map (kbd "C-0") 'text-scale-decrease)
+(define-key global-map (kbd "s-=") 'text-scale-increase)
+(define-key global-map (kbd "s-0") 'text-scale-decrease)
 
+;; window spliting
+(define-key global-map (kbd "s-1") 'delete-other-windows)
+(define-key global-map (kbd "s-2") 'split-window-below)
+(define-key global-map (kbd "s-3") 'split-window-right)
+(define-key global-map (kbd "s-4") 'clone-indirect-buffer-other-window)
+(define-key global-map (kbd "s-5") 'transpose-frame)
 
 ;;Remember the cursor position of files when reopening them
 (setq save-place-file "~/.emacs.d/saveplace")
-(setq-default save-place t)
+;;(setq-default save-place t)
+(save-place-mode 1)
 (require 'saveplace)
 
 ;;Save History--------------------------------
@@ -112,11 +126,11 @@
 ;;(global-evil-mc-mode  1)
 
 ;; look for bindings
-;;;;Increment / Decrement numbers
-;;(global-set-key (kbd "C-=") 'evil-numbers/inc-at-pt)
-;;(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
-;;(define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
-;;(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
+;;Increment / Decrement numbers
+(global-set-key (kbd "C-=") 'evil-numbers/inc-at-pt)
+(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
+(define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
+(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
 
 ;;Use j/k for browsing wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -182,7 +196,10 @@
   (mapc 'kill-buffer (delq (current-buffer) (buffer-list))))
 ;;--------------------------------------------
 
-
-
+;;(require 'unicode-fonts)
+;;(unicode-fonts-setup)
+;;(set-language-environment "UTF-8")
+;;(set-default-coding-systems 'utf-8)
+;;(set-clipboard-coding-system 'utf-16le)
 
 
