@@ -118,8 +118,8 @@ cmd + alt - l  : chunkc tiling::window --grid-layout 1:2:1:0:1:1
 # cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
 # cmd + alt - z : chunkc tiling::desktop --focus prev
 # cmd + alt - c : chunkc tiling::desktop --focus next
-# cmd + alt - 1 : chunkc tiling::desktop --focus 1
-# cmd + alt - 2 : chunkc tiling::desktop --focus 2
+cmd + alt - 1 : chunkc tiling::desktop --focus 1
+cmd + alt - 2 : chunkc tiling::desktop --focus 2
 # cmd + alt - 3 : chunkc tiling::desktop --focus 3
 # cmd + alt - 4 : chunkc tiling::desktop --focus 4
 # cmd + alt - 5 : chunkc tiling::desktop --focus 5
@@ -128,8 +128,8 @@ cmd + alt - l  : chunkc tiling::window --grid-layout 1:2:1:0:1:1
 
 # send window to desktop
 #shift + alt - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
-#shift + alt - z : chunkc tiling::window --send-to-desktop prev
-#shift + alt - c : chunkc tiling::window --send-to-desktop next
+shift + alt - z : chunkc tiling::window --send-to-desktop prev
+shift + alt - c : chunkc tiling::window --send-to-desktop next
 #shift + alt - 1 : chunkc tiling::window --send-to-desktop 1
 #shift + alt - 2 : chunkc tiling::window --send-to-desktop 2
 #shift + alt - 3 : chunkc tiling::window --send-to-desktop 3
