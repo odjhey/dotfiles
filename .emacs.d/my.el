@@ -22,10 +22,16 @@
 
 (with-eval-after-load 'evil-maps
   (define-key evil-insert-state-map (kbd "C-e") 'move-end-of-line)
-  (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line))
+  (define-key evil-insert-state-map (kbd "C-a") 'move-beginning-of-line)
+  )
 
 (ivy-mode 1)
 (beacon-mode 1)
+(setq beacon-size 20)
+
+;; Org mode
+(require 'org)
+(define-key global-map "\C-ca" 'org-agenda)
 
 ;;Do not display GUI Toolbar
 (tool-bar-mode 0)
@@ -79,7 +85,7 @@
 
 ;; Shortcut for changing font-size
 (define-key global-map (kbd "s-=") 'text-scale-increase)
-(define-key global-map (kbd "s-0") 'text-scale-decrease)
+(define-key global-map (kbd "s--") 'text-scale-decrease)
 
 ;; window spliting
 (define-key global-map (kbd "s-1") 'delete-other-windows)
@@ -202,4 +208,9 @@
 ;;(set-default-coding-systems 'utf-8)
 ;;(set-clipboard-coding-system 'utf-16le)
 
+;; projectile
+(require 'projectile)
+(define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+(define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+(projectile-mode +1)
 

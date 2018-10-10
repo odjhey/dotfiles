@@ -120,6 +120,7 @@ OneDrive/
 .shpotify.cfg
 .bitbar/
 .offlineimaprc
+org/
 
 dlclient.history
 dlclient.localstate
