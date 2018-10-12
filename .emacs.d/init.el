@@ -67,7 +67,7 @@
 (load custom-file 'noerror)
 
 
-;;;; (require 'benchmark-init)
+;; (require 'benchmark-init)
 
 ;; for some reason this ain't working
 (defun load-directory (dir)

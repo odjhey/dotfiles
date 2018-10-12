@@ -32,12 +32,48 @@
 ;; Org mode
 (require 'org)
 (define-key global-map "\C-ca" 'org-agenda)
+(define-key global-map "\C-cc" 'org-capture)
+(setq org-export-coding-system 'utf-8)
+
+;; Org protocol
+(require 'org-protocol)
+
+;; Org capture
+(setq org-default-notes-file "~/org/unfiled.org")
+;; Org capture templates
+(setq org-capture-templates
+      '(("t" ; hotkey
+	 "Todo list item" ; name
+	 entry ; type
+	 ; heading type and title
+	 (file+headline org-default-notes-file "Tasks")
+	 "* TODO %?\n %i\n %a" ;template
+	 )
+	("j" "Journal Entry"
+	 entry (file+datetree "~/org/journal.org")
+	 (file "~/.emacs.d/org-templates/journal.orgcaptmpl"))
+	("b" "Tidbit: quote, zinger, one-liner or textlet"
+	 entry
+	 (file+headline org-default-notes-file "Tidbits")
+	 (file "~/.emacs.d/org-templates/tidbit.orgcaptmpl"))	
+	("l" "A link, for reading later."
+	 entry (file+headline org-default-notes-file "Reading List")
+         "* the sf" ;; "* %:description\n%u\n\n%c\n\n%i"
+	 )
+	))
+
 
 ;;Do not display GUI Toolbar
 (tool-bar-mode 0)
 (menu-bar-mode -1) 
 (toggle-scroll-bar -1) 
 (display-time-mode t)
+;; no start screen
+(setq inhibit-startup-screen t)
+
+;; deafult file to open
+(find-file "~/org/my.org") 
+
 
 (add-to-list 'default-frame-alist
              '(ns-transparent-titlebar . t))
@@ -106,8 +142,14 @@
   '(search-ring regexp-search-ring)    ;; ... searches
   savehist-file "~/.emacs.d/savehist") ;; keep home clean
 (savehist-mode t)                      ;; do this before evaluation
+(setq history-length t)
+(setq history-delete-duplicates t)
+(setq savehist-save-minibuffer-history 1)
+(setq savehist-additional-variables
+      '(kill-ring
+        search-ring
+        regexp-search-ring))
 ;;--------------------------------------------
-
 (require 'browse-kill-ring)
 (setq browse-kill-ring-highlight-inserted-item t
       browse-kill-ring-highlight-current-entry nil
@@ -151,6 +193,7 @@
 ;;which-key displays available keybindings in a popup.
 (add-hook 'org-mode-hook 'which-key-mode)
 (add-hook 'cider-mode-hook 'which-key-mode)
+(which-key-setup-minibuffer)
 
 ;;Highlight matching parenthesis
 (show-paren-mode t)
@@ -214,3 +257,5 @@
 (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
 (projectile-mode +1)
 
+;; server
+;; (server-start) ;; use a daemon
