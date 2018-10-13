@@ -65,8 +65,9 @@ vq() {
 }
 
 # emacs
-alias e="emacs -nw"
+alias e="emacsclient -c"
 alias ec="emacsclient"
+alias ect="emacas -nw"
 alias bemacsd="brew services restart emacs-plus"
 
 # shorts

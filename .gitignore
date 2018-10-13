@@ -121,6 +121,7 @@ OneDrive/
 .bitbar/
 .offlineimaprc
 org/
+org
 
 dlclient.history
 dlclient.localstate
