@@ -1,7 +1,12 @@
 ;; shell
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
-(setq exec-path-from-shell-debug t)
+
+;; Macos' ls is not supported
+(when (string= system-type "darwin")       
+  (setq dired-use-ls-dired nil))
+
+(setq x-select-enable-clipboard nil)
 
 ;;(require 'cl)
 ;;(require 'powerline)
@@ -13,6 +18,7 @@
 (spaceline-spacemacs-theme)
 (setq spaceline-highlight-face-func 'spaceline-highlight-face-evil-state)
 (setq powerline-default-separator 'slant)
+(setq display-time-default-load-average nil)
 (spaceline-compile)
 
 (load-theme 'spacemacs-dark)
@@ -33,6 +39,8 @@
   "<SPC>" 'Control-X-prefix
   "s" 'swiper
   "a" 'org-agenda
+  "v" 'er/expand-region
+  "m" 'org-ctrl-c-ctrl-c
   )
 (evil-mode 1)
 
@@ -88,103 +96,22 @@
 (setq org-return-follows-link t)
 (setq org-export-coding-system 'utf-8)
 
+;; ORG BABEL
+;; active Babel languages
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((R . t)
+   (emacs-lisp . t)
+   (shell . t)))
+
 ;; Org protocol
 (require 'org-protocol)
 
 ;; Org capture
-(setq org-default-notes-file "~/org/unfiled.org")
-;; Org capture templates
-(setq org-capture-templates
-      '(("t" ; hotkey
-	 "Todo list item" ; name
-	 entry ; type
-	 ; heading type and title
-	 (file+headline org-default-notes-file "Tasks")
-	 "* TODO %?\n %i\n %a" ;template
-	 )
-	("j" "Journal Entry"
-	 entry (file+datetree "~/org/journal.org")
-	 (file "~/.emacs.d/org-templates/journal.orgcaptmpl"))
-;;	("b" "Tidbit: quote, zinger, one-liner or textlet"
-;;	 entry
-;;	 (file+headline org-default-notes-file "Tidbits")
-;;	 (file "~/.emacs.d/org-templates/tidbit.orgcaptmpl"))	
-;;	("l" "A link, for reading later."
-;;	 entry (file+headline org-default-notes-file "Reading List")
-;;         "* the sf" ;; "* %:description\n%u\n\n%c\n\n%i"
-;;	 )
-;;	("L" "Protocol Link" entry (file+headline org-default-notes-file "Inbox")
-;;	 "* %? [[%:link][%:description]] %(progn (setq kk/delete-frame-after-capture 2) \"\")\nCaptured On: %U"
-;;	 :empty-lines 1)
-	))
-
-
-;;;; another attempt at closing capture frame
-;; (defvar kk/delete-frame-after-capture 0 "Whether to delete the last frame after the current capture")
-;; (defun kk/delete-frame-if-neccessary (&rest r)
-;;   (cond
-;;    ((= kk/delete-frame-after-capture 0) nil)
-;;    ((> kk/delete-frame-after-capture 1)
-;;     (setq kk/delete-frame-after-capture (- kk/delete-frame-after-capture 1)))
-;;    (t
-;;     (setq kk/delete-frame-after-capture 0)
-;;     (delete-frame))))
-;; (advice-add 'org-capture-finalize :after 'kk/delete-frame-if-neccessary)
-;; (advice-add 'org-capture-kill :after 'kk/delete-frame-if-neccessary)
-;; (advice-add 'org-capture-refile :after 'kk/delete-frame-if-neccessary)
-
-;;;; closing capture frame called by external
-;;(defun make-capture-frame ()
-;;  "Create a new frame and run org-capture."
-;;  (interactive)
-;;  (make-frame '((name . "capture")))
-;;  (select-frame-by-name "capture")
-;;  (delete-other-windows)
-;;  (org-capture)
-;;  )
-;;
-;;(defadvice org-capture-finalize (after delete-capture-frame activate)
-;;  "Advise capture-finalize to close the frame if it is the capture frame"
-;;  (if (equal "capture" (frame-parameter nil 'name))
-;;      (delete-frame)))
-
-;;(defadvice org-capture
-;;    (after make-full-window-frame activate)
-;;  "Advise capture to be the only window when used as a popup"
-;;  (if (equal "emacs-capture" (frame-parameter nil 'name))
-;;      (delete-other-windows)))
-;;
-;;(defadvice org-capture-finalize
-;;    (after delete-capture-frame activate)
-;;  "Advise capture-finalize to close the frame"
-;;  (if (equal "emacs-capture" (frame-parameter nil 'name))
-;;      (delete-frame (selected-frame) t)))
-
-
-;; org capture madness!!
-(defadvice org-capture
-    (after make-full-window-frame activate)
-  "Advise capture to be the only window when used as a popup"
-  (if (equal "capture" (frame-parameter nil 'name))
-      (delete-other-windows)))
-
-(defadvice org-capture-finalize
-(after delete-capture-frame activate)
-  "Advise capture-finalize to close the frame"
-  (when (and (equal "capture" (frame-parameter nil 'name))
-	 (not (eq this-command 'org-capture-refile)))
-(delete-frame)))
-
-(defadvice org-capture-refile
-(after delete-capture-frame activate)
-  "Advise org-refile to close the frame"
-  (delete-frame))
-
-(defun activate-capture-frame ()
-  "run org-capture in capture frame"
-  (select-frame-by-name "capture")
-  (switch-to-buffer (get-buffer-create "*scratch*"))
-  (org-capture)) 
+(load-file 
+  (concat 
+    (file-name-directory user-emacs-directory)
+    "orgcapture.el"))
 
 ;;Do not display GUI Toolbar
 (tool-bar-mode 0)
@@ -283,6 +210,7 @@
 (global-evil-surround-mode 1)
 ;; multi cursor
 (global-evil-mc-mode  1)
+(setq evil-mc-one-cursor-show-mode-line-text t)
 
 ;; Multiple Cursors
 ;; https://github.com/gabesoft/evil-mc
@@ -393,4 +321,20 @@
 (define-key company-active-map [tab] 'company-complete)
 (define-key company-active-map (kbd "C-n") 'company-select-next)
 (define-key company-active-map (kbd "C-p") 'company-select-previous)
+
+;; hide some minor modes
+(require 'diminish)
+(diminish 'jiggle-mode)
+(diminish 'ivy-mode)
+(diminish 'which-key-mode)
+(diminish 'evil-mc-mode)
+(diminish 'volatile-highlights-mode)
+(diminish 'undo-tree-mode)
+(diminish 'projectile-mode)
+(diminish 'eldoc-mode)
+(diminish 'beacon-mode)
+(diminish 'company-mode)
+(diminish 'text-scale-mode)
+;; Replace abbrev-mode lighter with "Abv"
+;; (diminish 'abbrev-mode "Abv")
 

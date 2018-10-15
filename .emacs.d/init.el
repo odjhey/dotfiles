@@ -1,8 +1,8 @@
 ;; Load and activate emacs packages. Do this first so that the
 ;; packages are loaded before you start trying to modify them.
 ;; This also sets the load path.
+(package-initialize)
 (setq package-enable-at-startup nil)
-;;(package-initialize)
 
 ;; Define package repositories
 (require 'package)

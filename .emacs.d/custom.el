@@ -22,7 +22,7 @@
  '(org-refile-targets '((nil :maxlevel . 5) (org-agenda-files :maxlevel . 2)))
  '(org-track-ordered-property-with-tag nil)
  '(package-selected-packages
-   '(company org-pomodoro auctex pdf-tools which-key web-mode rainbow-delimiters markdown-mode projectile exec-path-from-shell comment-tags browse-kill-ring beacon auto-complete evil-numbers evil-mc evil-surround evil swiper counsel ivy paredit ag))
+   '(diminish expand-region company org-pomodoro auctex pdf-tools which-key web-mode rainbow-delimiters markdown-mode projectile exec-path-from-shell comment-tags browse-kill-ring beacon auto-complete evil-numbers evil-mc evil-surround evil swiper counsel ivy paredit ag))
  '(pdf-view-midnight-colors '("#655370" . "#fbf8ef"))
  '(projectile-mode t nil (projectile))
  '(scroll-bar-mode nil)
@@ -38,4 +38,5 @@
  '(hl-line ((t (:background "color-236"))))
  '(lazy-highlight ((t (:background "gray42" :weight normal))))
  '(org-document-title ((t (:inherit bold :foreground "#bc6ec5" :underline nil :height 1.2))))
+ '(region ((t (:background "gray31"))))
  '(whitespace-newline ((t (:foreground "brightblue")))))
