@@ -17,6 +17,9 @@
 (add-to-list 'package-archives
              '("melpa-stable" . "http://stable.melpa.org/packages/") t)
 
+;; mail
+(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
+
 ;; Download the ELPA archive description if needed.
 ;; This informs Emacs about the latest versions of all packages, and
 ;; makes them available for download.
@@ -74,6 +77,7 @@
   (let ((load-it (lambda (f)
 		   (load-file (concat (file-name-as-directory dir) f)))))
     (mapc load-it (directory-files dir nil "\\.el$"))))
+
 (load-directory (concat (file-name-directory user-emacs-directory) "lisp/") )
 
 ;;(load-file 

@@ -123,6 +123,12 @@ OneDrive/
 org/
 org
 LightWorks/
+.gnupg/
+.password-store/
+.offlineimap.py
+.mu/
+.offlineimap/
+MailDir/
 
 dlclient.history
 dlclient.localstate

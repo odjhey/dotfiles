@@ -2,9 +2,9 @@
 (when (memq window-system '(mac ns x))
   (exec-path-from-shell-initialize))
 
-;; Macos' ls is not supported
-(when (string= system-type "darwin")       
-  (setq dired-use-ls-dired nil))
+;;;; Macos' ls is not supported
+;;(when (string= system-type "darwin")       
+;;  (setq dired-use-ls-dired nil))
 
 (setq x-select-enable-clipboard nil)
 
@@ -338,3 +338,4 @@
 ;; Replace abbrev-mode lighter with "Abv"
 ;; (diminish 'abbrev-mode "Abv")
 
+(require 'mu4e)
