@@ -189,3 +189,5 @@ alias bupdg="brew update && brew upgrade && brew cleanup && brew prune && brew d
 
 [ -f ~/safe/.aliases ] && source ~/safe/.aliases
 [ -f ~/safe/.functions ] && source ~/safe/.functions
+
+export PATH="$HOME/.cargo/bin:$PATH"

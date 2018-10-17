@@ -228,6 +228,12 @@ ctrl + alt - d : chunkc tiling::desktop --layout float
 
 # ctrl + alt - w : chunkc tiling::desktop --deserialize ~/.chunkwm_layouts/dev_1
 
+# disable/enable ffm
+cmd + ctrl + alt + shift - m : chunkc core::load ffm.so
+cmd + ctrl + alt - m : chunkc core::unload ffm.so
+
+
 # emacs
-# cmd + alt - n : emacs-capture "org-protocol:/capture?template=L&title=haha&url=google.com"
 cmd + alt - n : emacsclient -c -F "((name . \"capture\") (height . 15) (width . 80) (left . 300) (top . 400))" -e '(activate-capture-frame)'
+
+

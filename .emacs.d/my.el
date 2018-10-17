@@ -63,7 +63,7 @@
 (setq enable-recursive-minibuffers t)
 ;;(global-set-key "\C-s" 'swiper)
 ;;(global-set-key (kbd "C-c C-r") 'ivy-resume)
-;;(global-set-key (kbd "<f6>") 'ivy-resume)
+(global-set-key (kbd "<f6>") 'ivy-resume)
 (global-set-key (kbd "M-x") 'counsel-M-x)
 ;;(global-set-key (kbd "C-x C-f") 'counsel-find-file)
 ;;(global-set-key (kbd "<f1> f") 'counsel-describe-function)
@@ -78,8 +78,8 @@
 ;;(global-set-key (kbd "C-S-o") 'counsel-rhythmbox)
 (define-key minibuffer-local-map (kbd "C-r") 'counsel-minibuffer-history)
 
-(beacon-mode 1)
-(setq beacon-size 20)
+;; (beacon-mode 1)
+;; (setq beacon-size 20)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; ORG MODE
@@ -339,3 +339,18 @@
 ;; (diminish 'abbrev-mode "Abv")
 
 (require 'mu4e)
+(require 'org-mu4e)
+(require 'evil-mu4e)
+(setq mu4e-mu-binary "/usr/local/bin/mu") 
+;;store link to message if in header view, not to header query
+(setq org-mu4e-link-query-in-headers-mode nil)
+;; Don't ask to quit... why is this the default?
+(setq mu4e-confirm-quit nil)
+
+;; Include a bookmark to open all of my inboxes
+(add-to-list 'mu4e-bookmarks
+       (make-mu4e-bookmark
+        :name "All Inboxes"
+        :query "maildir:/odee.ftsi/INBOX OR maildir:/odjhey@gmail.com/INBOX"
+        :key ?i))
+

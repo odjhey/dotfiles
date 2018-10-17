@@ -129,6 +129,7 @@ LightWorks/
 .mu/
 .offlineimap/
 MailDir/
+.authinfo
 
 dlclient.history
 dlclient.localstate
@@ -137,4 +138,6 @@ dlgmanager.config
 **.old
 **.log
 
-
+.cargo/
+.multirust
+.rustup/ 
