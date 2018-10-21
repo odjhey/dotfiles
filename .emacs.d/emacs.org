@@ -1,0 +1,588 @@
+#+TITLE: Emacs Literate Configuration
+#+AUTHOR: Your Name Here
+#+PROPERTY: header-args :tangle yes
+
+* Configuration
+:PROPERTIES:
+:VISIBILITY: children
+:END:
+
+** Table of Contents :TOC_3_gh:
+- [[#configuration][Configuration]]
+  - [[#about-this-file][About this file]]
+  - [[#org-file-tweaks][Org File Tweaks]]
+    - [[#automatically-tangle][Automatically Tangle]]
+    - [[#visibility-settings][Visibility Settings]]
+    - [[#table-of-contents][Table of Contents]]
+  - [[#personal-information][Personal Information]]
+  - [[#emacs-initialization][Emacs Initialization]]
+    - [[#settings][Settings]]
+    - [[#package-management][Package Management]]
+  - [[#new-defaults][New Defaults]]
+    - [[#base][Base]]
+    - [[#ui][UI]]
+  - [[#packages][Packages]]
+    - [[#doom-theme][Doom Theme]]
+    - [[#modeline][Modeline]]
+    - [[#evil][Evil]]
+    - [[#ivy][Ivy]]
+    - [[#counsel][Counsel]]
+    - [[#swiper][Swiper]]
+    - [[#company][Company]]
+    - [[#magit][Magit]]
+    - [[#projectile][Projectile]]
+    - [[#org][Org]]
+    - [[#toc-org][Toc-org]]
+    - [[#which-key][Which Key]]
+    - [[#general-key-bindings][General (Key bindings]]
+    - [[#aggresive-indent][Aggresive Indent]]
+    - [[#yass-snippets][Yass snippets]]
+    - [[#nlinum][Nlinum]]
+    - [[#smartparens][Smartparens]]
+    - [[#rainbow-mode][Rainbow mode]]
+    - [[#flyspell-mode][FlySpell mode]]
+    - [[#flycheck][Flycheck]]
+    - [[#avy][Avy]]
+    - [[#custom][Custom]]
+  - [[#post-initialization][Post Initialization]]
+
+** About this file
+This is an Emacs literate configuration template. It contains the basic structure
+of a literate config along with some optimizations to ensure a fast load time.
+
+** Org File Tweaks
+There are a few tweaks included in this org file that make it a little easier to
+work with.
+
+*** Automatically Tangle
+First there is a property defined on the file:
+
+#+BEGIN_SRC :tangle no
+header-args :tangle yes
+#+END_SRC
+
+This tells emacs to automatically tangle (include) all code blocks in this file when
+generating the code for the config, unless the code block explicitly includes
+=:tangle no= as the above code block does.
+
+*** Visibility Settings
+Next we have a property defined on the [[Configuration][Configuration]] heading that defines the visibility
+that tells org to show it's direct children on startup. This way a clean outline of all
+sub headings under Configuration is shown each time this file is opened in org-mode.
+
+*** Table of Contents
+Finally, there is a [[Table of Contents][Table of Contents]] heading that includes the tag: =:TOC_3_gh:=. This
+tells an org-mode package =toc-org= to generate a table of contents under this heading
+that has a max depth of 3 and is created using Github-style hrefs. This table of contents
+is updated everytime the file is saved and makes for a functional table of contents that
+works property directly on github.
+
+** Personal Information
+Let's set some variables with basic user information.
+
+#+BEGIN_SRC emacs-lisp
+(setq user-full-name "Odelon Jhey Pacalso"
+      user-mail-address "odjhey@gmail.com")
+#+END_SRC
+
+** Emacs Initialization
+
+*** Settings
+We're going to increase the gc-cons-threshold to a very high number to decrease the load and compile time.
+We'll lower this value significantly after initialization has completed. We don't want to keep this value
+too high or it will result in long GC pauses during normal usage.
+
+#+BEGIN_SRC emacs-lisp
+(eval-and-compile
+  (setq gc-cons-threshold 402653184
+	gc-cons-percentage 0.6))
+#+END_SRC
+
+Disable certain byte compiler warnings to cut down on the noise. This is a personal choice and can be removed
+if you would like to see any and all byte compiler warnings.
+
+#+BEGIN_SRC emacs-lisp
+(setq byte-compile-warnings '(not free-vars unresolved noruntime lexical make-local))
+#+END_SRC
+
+*** Package Management
+
+**** Package Settings
+We're going to set the =load-path= ourselves and avoid calling =(package-initilize)= (for
+performance reasons) so we need to set =package--init-file-ensured= to true to tell =package.el=
+to not automatically call it on our behalf. Additionally we're setting
+=package-enable-at-startup= to nil so that packages will not automatically be loaded for us since
+=use-package= will be handling that.
+
+#+BEGIN_SRC emacs-lisp
+  (eval-and-compile
+    (setq load-prefer-newer t
+	  package-user-dir "~/.emacs.d/elpa"
+	  package--init-file-ensured t
+	  package-enable-at-startup nil)
+
+    (unless (file-directory-p package-user-dir)
+      (make-directory package-user-dir t)))
+#+END_SRC
+
+**** Use-Package Settings
+Tell =use-package= to always defer loading packages unless explicitly told otherwise. This speeds up
+initialization significantly as many packages are only loaded later when they are explicitly used.
+
+#+BEGIN_SRC emacs-lisp
+  (setq use-package-always-defer t
+	use-package-verbose t)
+#+END_SRC
+
+**** Manually Set Load Path
+We're going to set the load path ourselves so that we don't have to call =package-initialize= at
+runtime and incur a large performance hit. This load-path will actually be faster than the one
+created by =package-initialize= because it appends the elpa packages to the end of the load path.
+Otherwise any time a builtin package was required it would have to search all of third party paths
+first.
+
+#+BEGIN_SRC emacs-lisp
+  (eval-and-compile
+    (setq load-path (append load-path (directory-files package-user-dir t "^[^.]" t))))
+#+END_SRC
+
+**** Initialize Package Management
+Next we are going to require =package.el= and add our additional package archives, 'melpa' and 'org'.
+Afterwards we need to initialize our packages and then ensure that =use-package= is installed, which
+we promptly install if it's missing. Finally we load =use-package= and tell it to always install any
+missing packages.
+
+Note that this entire block is wrapped in =eval-when-compile=. The effect of this is to perform all
+of the package initialization during compilation so that when byte compiled, all of this time consuming
+code is skipped. This can be done because the result of byte compiling =use-package= statements results
+in the macro being fully expanded at which point =use-package= isn't actually required any longer.
+
+Since the code is automatically compiled during runtime, if the configuration hasn't already been
+previously compiled manually then all of the package initialization will still take place at startup.
+
+#+BEGIN_SRC emacs-lisp
+  (eval-when-compile
+    (require 'package)
+
+    (unless (assoc-default "melpa" package-archives)
+      (add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t))
+    (unless (assoc-default "org" package-archives)
+      (add-to-list 'package-archives '("org" . "http://orgmode.org/elpa/") t))
+
+    (package-initialize)
+    (unless (package-installed-p 'use-package)
+      (package-refresh-contents)
+      (package-install 'use-package))
+    (require 'use-package)
+    (setq use-package-always-ensure t))
+#+END_SRC
+
+** New Defaults
+
+*** Base
+#+BEGIN_SRC emacs-lisp
+    (setq delete-old-versions -1 )		; delete excess backup versions silently
+    (setq version-control t )		; use version control
+    (setq vc-make-backup-files t )		; make backups file even when in version controlled dir
+    (setq backup-directory-alist `(("." . "~/.emacs.d/backups")) ) ; which directory to put backups file
+    (setq vc-follow-symlinks t )				       ; don't ask for confirmation when opening symlinked file
+    (setq auto-save-file-name-transforms '((".*" "~/.emacs.d/auto-save-list/" t)) ) ;transform backups file name
+    (setq inhibit-startup-screen t )	; inhibit useless and old-school startup screen
+    (setq ring-bell-function 'ignore )	; silent bell when you make a mistake
+    (setq coding-system-for-read 'utf-8 )	; use utf-8 by default
+    (setq coding-system-for-write 'utf-8 )
+    (setq sentence-end-double-space nil)	; sentence SHOULD end with only a point.
+    (setq default-fill-column 80)		; toggle wrapping text at the 80th character
+    (setq initial-scratch-message "") ; print a default message in the empty scratch buffer opened at startup
+#+END_SRC
+
+*** UI
+#+BEGIN_SRC emacs-lisp
+    (menu-bar-mode 0)
+    (blink-cursor-mode -1)
+    (scroll-bar-mode -1)
+    (tool-bar-mode -1)
+    (tooltip-mode -1)
+    (setq mouse-highlight nil)
+    (setq column-number-mode t)
+    (setq-default cursor-in-non-selected-windows nil)
+    (setq x-underline-at-descent-line t)
+    (setq x-stretch-cursor t)
+    (setq frame-resize-pixelwise t)
+    (setq uniquify-buffer-name-style 'forward)
+    (show-paren-mode)
+    #+END_SRC
+
+** Packages
+*** Doom Theme
+    #+BEGIN_SRC emacs-lisp
+    (use-package doom-themes
+    :config
+    (progn
+    (load-theme 'doom-one t)
+    (doom-themes-neotree-config)
+    (doom-themes-org-config)))
+    #+END_SRC
+*** Modeline
+    #+BEGIN_SRC emacs-lisp
+    (use-package doom-modeline
+       :ensure t
+       :defer t
+       :hook (after-init . doom-modeline-init))
+    #+END_SRC
+
+*** Evil
+Install, automatically load, and enable evil. It's like vim, but better!
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil
+  :demand t
+  :config
+  (evil-mode 1)
+  (evil-want-C-i-jump nil))
+#+END_SRC
+
+Handling code comments
+#+BEGIN_SRC emacs-lisp
+(use-package evil-nerd-commenter
+:demand t
+:config
+(evilnc-default-hotkeys))
+#+END_SRC
+
+Manage surronding objects
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-surround
+:ensure t
+:config
+(global-evil-surround-mode 1))
+(use-package evil-snipe
+:after general
+  :config
+  (setq  evil-snipe-scope 'whole-visible)
+  (general-define-key
+  :states '(normal operator motion)
+  "f" 'evil-snipe-s
+  "F" 'evil-snipe-S)
+  (evil-snipe-override-mode 1))
+#+END_SRC
+
+Mode for handling alignment
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-lion
+:config
+(evil-lion-mode))
+#+END_SRC
+
+
+*** Ivy
+Generic completion frontend that's just awesome! Let's install and enable it.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ivy
+  :demand t
+  :config
+  (ivy-mode 1)
+
+  (use-package smex)
+  (global-set-key [remap execute-extended-command] #'counsel-M-x)
+  (global-set-key [remap find-file] #'counsel-find-file)
+)
+#+END_SRC
+
+*** Counsel
+Counsel allows us to utilize ivy by replacing many built-in and common functions
+with richer versions. Let's install it!
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel-projectile)
+(use-package counsel
+  :demand t)
+#+END_SRC
+
+*** Swiper
+Swiper is an awesome searching utility with a quick preview. Let's install it and
+load it when =swiper= or =swiper-all= is called.
+
+#+BEGIN_SRC emacs-lisp
+(use-package swiper
+  :commands (swiper swiper-all))
+#+END_SRC
+
+*** Company
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :hook (after-init . global-company-mode)
+  :config
+(setq company-tooltip-align-annotations t)
+(setq company-idle-delay 0.2)
+(setq company-minimum-prefix-length 2))
+#+END_SRC
+
+*** Magit
+The magical git client. Let's load magit only when one of the several entry pont
+functions we invoke regularly outside of magit is called.
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit
+  :commands (magit-status magit-blame magit-log-buffer-file magit-log-all))
+#+END_SRC
+
+*** Projectile
+Projectile is a quick and easy project management package that "just works". We're
+going to install it and make sure it's loaded immediately.
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :demand t)
+#+END_SRC
+
+*** Org
+Let's include a newer version of org-mode than the one that is built in. We're going
+to manually remove the org directories from the load path, to ensure the version we
+want is prioritized instead.
+
+**** Insert custom agenda functions
+
+#+BEGIN_SRC emacs-lisp
+(use-package org
+  :ensure org-plus-contrib
+  :pin org
+  :defer t)
+
+;; Ensure ELPA org is prioritized above built-in org.
+(require 'cl)
+(setq load-path (remove-if (lambda (x) (string-match-p "org$" x)) load-path))
+#+END_SRC
+
+*** Toc-org
+Let's install and load the =toc-org= package after org mode is loaded. This is the
+package that automatically generates an up to date table of contents for us.
+
+#+BEGIN_SRC emacs-lisp
+(use-package toc-org
+  :after org
+  :init (add-hook 'org-mode-hook #'toc-org-enable))
+#+END_SRC
+
+*** Which Key
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+:ensure t
+:config
+(setq which-key-idle-delay 0.4)
+(which-key-mode))
+#+END_SRC
+
+
+*** General (Key bindings
+
+    #+BEGIN_SRC emacs-lisp
+(use-package general
+	     :ensure t
+	     :config
+	     (general-auto-unbind-keys)
+	     (general-define-key
+	      :states '(normal visual emacs)
+	      :prefix "SPC"
+	      "aa" 'apropos
+	      "b" 'ivy-switch-buffer
+	      "f" 'find-file
+	      "gs" 'magit-status
+	      "h"  '(:ignore t :which-key "Help")
+	      "co" 'odz/open-config'
+	      "hf" 'describe-function
+	      "hk" 'describe-key
+	      "hm" 'describe-mode
+	      "hr" 'info-emacs-manual
+	      "hv" 'describe-variable
+	      "j" 'avy-goto-word-or-subword-1
+	      "o"  '(:ignore t :which-key "Org")
+	      "p"  '(:ignore t :which-key "Programming")
+	      "pe" 'next-error
+	      "q" 'kill-this-buffer
+	      "r"  '(:ignore t :which-key "Research")
+	      "rad" 'doi-utils-add-bibtex-entry-from-doi
+	      "ras" 'doi-utils-add-entry-from-crossref-query
+	      "rc" 'org-ref-helm-insert-cite-link
+	      "rw" 'helm-bibtex
+	      "wo" 'other-window
+	      "wd" 'delete-other-windows
+	      "wsh" 'split-window-right
+	      "wsv" 'split-window-below
+	      "xc" 'save-buffers-kill-terminal
+	      "xe" 'eval-last-sexp)
+	     (general-define-key
+	      :states '(normal)
+	      "/" 'swiper)
+	     )
+(define-key ivy-minibuffer-map [escape] 'minibuffer-keyboard-quit)
+(define-key ivy-minibuffer-map (kbd "s-j") 'ivy-next-line)
+(define-key ivy-minibuffer-map (kbd "s-k") 'ivy-previous-line)
+(define-key ivy-minibuffer-map (kbd "<RET>") 'ivy-alt-done)
+(global-set-key (kbd "C-=") 'text-scale-increase)
+(global-set-key (kbd "C--") 'text-scale-decrease)
+    #+END_SRC
+
+*** Aggresive Indent
+#+BEGIN_SRC emacs-lisp
+(use-package aggressive-indent
+    :ensure t
+  :config
+  (global-aggressive-indent-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'html-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'sql-mode)
+(add-to-list 'aggressive-indent-excluded-modes 'web-mode))
+#+END_SRC
+
+*** Yass snippets
+    #+BEGIN_SRC emacs-lisp
+    (use-package yasnippet
+	     :diminish yas-minor-mode
+	     :commands (yas-global-mode)
+	     :defer 2
+	     :init
+	     (with-eval-after-load 'yasnippet
+	       (progn
+		 (setq yas-snippet-dirs
+		       (append yas-snippet-dirs '("~/.emacs.d/snippets")))))
+	     :config
+	     (yas-global-mode)
+	     (setq yas-indent-line 'none))
+	     #+END_SRC
+
+*** Nlinum
+    #+BEGIN_SRC emacs-lisp
+(use-package nlinum
+	     :ensure nil
+	     :config (add-hook 'prog-mode-hook '(lambda () (nlinum-mode t)))
+	     (setq nlinum-highlight-current-line t))
+    #+END_SRC
+
+*** Smartparens
+#+BEGIN_SRC emacs-lisp
+(use-package smartparens
+  :ensure t
+  :config
+  (progn
+  (require 'smartparens-config)
+  (add-to-list 'sp-ignore-modes-list 'circe-channel-mode)
+  (add-to-list 'sp-ignore-modes-list 'circe-server-mode)
+  (add-to-list 'sp-ignore-modes-list 'circe-query-mode)
+  (smartparens-global-mode 1)))
+#+END_SRC
+
+*** Rainbow mode
+#+BEGIN_SRC emacs-lisp
+(use-package rainbow-delimiters
+:hook (emacs-lisp-mode . rainbow-delimiters-mode))
+#+END_SRC
+
+*** FlySpell mode
+#+BEGIN_SRC emacs-lisp
+(use-package ispell
+  :defer 15
+  :config
+  (progn
+    (cond
+     ((executable-find "aspell")
+      (setq ispell-program-name "aspell")
+      (setq ispell-extra-args   '("--sug-mode=ultra"
+				  "--lang=en_US")))
+     ((executable-find "hunspell")
+      (setq ispell-program-name "hunspell")
+      (setq ispell-extra-args   '("-d en_US"))))
+
+    ;; Save a new word to personal dictionary without asking
+    (setq ispell-silently-savep t)
+
+    (use-package flyspell
+      :init
+      (setq flyspell-use-meta-tab nil)
+      :config
+      (progn
+	(add-hook 'prog-mode-hook #'flyspell-prog-mode)
+	(with-eval-after-load 'auto-complete
+	  (ac-flyspell-workaround))
+	;; https://github.com/larstvei/dot-emacs#flyspell
+	(add-hook 'text-mode-hook #'turn-on-flyspell)
+	(add-hook 'org-mode-hook  #'turn-on-flyspell)
+
+	;; https://github.com/d12frosted/flyspell-correct
+	(use-package flyspell-correct-ivy
+	  :after flyspell-correct
+	  :bind (:map modi-mode-map
+		 ("<f12>" . flyspell-correct-word-generic)))
+	))))
+#+END_SRC
+
+*** Flycheck
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :config
+(add-hook 'after-init-hook #'global-flycheck-mode)
+(define-fringe-bitmap 'flycheck-fringe-bitmap-ball
+    (vector #b00000000
+	    #b00000000
+	    #b00000000
+	    #b00000000
+	    #b00000000
+	    #b00111000
+	    #b01111100
+	    #b11111110
+	    #b11111110
+	    #b01111100
+	    #b00111000
+	    #b00000000
+	    #b00000000
+	    #b00000000
+	    #b00000000
+	    #b00000000
+	    #b00000000))
+
+(flycheck-define-error-level 'error
+  :severity 100
+  :compilation-level 2
+  :overlay-category 'flycheck-error-overlay
+  :fringe-bitmap 'flycheck-fringe-bitmap-ball
+  :fringe-face 'flycheck-fringe-error
+  :error-list-face 'flycheck-error-list-error)
+(flycheck-define-error-level 'warning
+  :severity 10
+  :compilation-level 1
+  :overlay-category 'flycheck-warning-overlay
+  :fringe-bitmap 'flycheck-fringe-bitmap-ball
+  :fringe-face 'flycheck-fringe-warning
+  :error-list-face 'flycheck-error-list-warning))
+#+END_SRC
+
+*** Avy
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :after (:all general evil-snipe)
+  :defer
+  :config
+(setq avy-background t)
+  (general-define-key
+  :states '(normal operator motion)
+  "s" 'evil-avy-goto-char-timer))
+#+END_SRC
+
+*** Custom
+
+**** Open Config
+#+BEGIN_SRC emacs-lisp
+(defun odz/open-config ()
+(interactive)
+(find-file "~/.emacs.d/emacs.org"))
+#+END_SRC
+
+** Post Initialization
+Let's lower our GC thresholds back down to a sane level.
+
+#+BEGIN_SRC emacs-lisp
+(setq gc-cons-threshold 16777216
+      gc-cons-percentage 0.1)
+#+END_SRC

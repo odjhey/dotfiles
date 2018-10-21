@@ -137,7 +137,9 @@ dlgmanager.config
 
 **.old
 **.log
+tmp/
 
 .cargo/
 .multirust
 .rustup/ 
+.tldrc/
