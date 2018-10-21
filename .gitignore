@@ -135,9 +135,10 @@ dlclient.history
 dlclient.localstate
 dlgmanager.config
 
-**.old
-**.log
+*.old
+*.log
 tmp/
+
 
 .cargo/
 .multirust
