@@ -1,94 +1,35 @@
-;; Load and activate emacs packages. Do this first so that the
-;; packages are loaded before you start trying to modify them.
-;; This also sets the load path.
-(package-initialize)
-(setq package-enable-at-startup nil)
+;;; Package --- Summary
 
-;; Define package repositories
-(require 'package)
-(add-to-list 'package-archives
-             '("marmalade" . "http://marmalade-repo.org/packages/") t)
-(add-to-list 'package-archives
-             '("tromey" . "http://tromey.com/elpa/") t)
-(add-to-list 'package-archives
-             '("org" . "http://orgmode.org/elpa/") t)
-(add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/") t)
-(add-to-list 'package-archives
-             '("melpa-stable" . "http://stable.melpa.org/packages/") t)
+;;; Commentary:
+;; Emacs init file responsible for either loading a pre-compiled configuration file
+;; or tangling and loading a literate org configuration file.
 
-;; mail
-(add-to-list 'load-path "/usr/local/share/emacs/site-lisp/mu/mu4e/")
+;;; Code:
 
-;; Download the ELPA archive description if needed.
-;; This informs Emacs about the latest versions of all packages, and
-;; makes them available for download.
-(when (not package-archive-contents)
-  (package-refresh-contents))
+;; Don't attempt to find/apply special file handlers to files loaded during startup.
+(let ((file-name-handler-alist nil))
+  ;; If config is pre-compiled, then load that
+  (if (file-exists-p (expand-file-name "emacs.elc" user-emacs-directory))
+      (load-file (expand-file-name "emacs.elc" user-emacs-directory))
+    ;; Otherwise use org-babel to tangle and load the configuration
+    (require 'org)
+    (org-babel-load-file (expand-file-name "emacs.org" user-emacs-directory))))
 
-;; The packages you want installed. You can also install these
-;; manually with M-x package-install
-;; Add in your own as you wish:
-(defvar my-packages
-  '(
-    ag
-    ;; makes handling lisp expressions much, much easier
-    ;; Cheatsheet: http://www.emacswiki.org/emacs/PareditCheatsheet
-    paredit
-    ivy counsel swiper ;; try helm later?
-    evil
-    evil-surround ;;like tpopes vim surround coool!
-    evil-mc ;;multi cursor
-    evil-numbers
-
-    auto-complete
-    beacon ;; blink blink
-    browse-kill-ring
-    comment-tags
-    exec-path-from-shell
-    ;; ledger-mode ;;ledger = command line accounting
-    projectile
-    markdown-mode
-    rainbow-delimiters
-    spaceline
-    web-mode
-    which-key
-    ;; benchmark-init ;; profile emacs
-    pdf-tools
-    ))
-
-;; (dolist (p my-packages)
-;;   (when (not (package-installed-p p))
-;;     (package-install p)))
-(dolist (p my-packages)
-  (unless (package-installed-p p)
-    (package-refresh-contents)
-    (package-install p))
-  (add-to-list 'package-selected-packages p))
-
-(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file 'noerror)
-
-
-;; (require 'benchmark-init)
-
-;; for some reason this ain't working
-(defun load-directory (dir)
-  (let ((load-it (lambda (f)
-		   (load-file (concat (file-name-as-directory dir) f)))))
-    (mapc load-it (directory-files dir nil "\\.el$"))))
-
-(load-directory (concat (file-name-directory user-emacs-directory) "lisp/") )
-
-;;(load-file 
-;;  (concat 
-;;    (file-name-directory user-emacs-directory)
-;;    "lisp/abap-mode.el"))
-
-(load-file 
-  (concat 
-    (file-name-directory user-emacs-directory)
-    "my.el"))
-
-
-
+;;; init.el ends here
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("75d3dde259ce79660bac8e9e237b55674b910b470f313cdf4b019230d01a982a" default)))
+ '(package-selected-packages
+   (quote
+    (which-key use-package toc-org smex smartparens rainbow-delimiters org-plus-contrib nlinum magit general evil-surround evil-snipe evil-nerd-commenter evil-lion doom-themes doom-modeline counsel-projectile company aggressive-indent))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )

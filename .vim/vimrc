@@ -10,6 +10,9 @@ set t_Co=256
 execute pathogen#infect()
 set rtp+=/usr/local/opt/fzf
 
+
+set mouse=a
+
 set hidden " allow unsaved background buffers and remember marks/undo for them 
 set history=10000 " remember more commands and search history
 set expandtab 
@@ -141,6 +144,7 @@ set cursorline
 "  set guifont=Consolas:h10
 "endif
 set background=dark
+
 if has('gui_running')
   colorscheme solarized
   "I dont like the default Solarized background
@@ -260,8 +264,8 @@ function! InsertTabWrapper()
     return "\<c-p>"
   endif
 endfunction
-inoremap <expr> <tab> InsertTabWrapper()
-inoremap <s-tab> <c-n>
+" inoremap <expr> <tab> InsertTabWrapper()
+" inoremap <s-tab> <c-n>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " RENAME CURRENT FILE
@@ -400,3 +404,7 @@ packadd! matchit
 
 
 
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<c-b>"
+let g:UltiSnipsJumpBackwardTrigger="<c-z>"

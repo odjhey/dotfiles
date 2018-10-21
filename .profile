@@ -1,6 +1,8 @@
 # Add Paths
+export PATH=/usr/local/opt/texinfo/bin:${PATH}
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
 export PATH="$HOME/bin:$PATH"
+
 
 
 # TODO add check if has emacs daemon then use emacsclient else use vim
