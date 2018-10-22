@@ -14,7 +14,7 @@
  '(display-line-numbers-type nil)
  '(display-time-mode t)
  '(line-number-mode nil)
- '(org-agenda-files (quote ("~/org/my.org")))
+ '(org-agenda-files (quote ("~/org/work.org" "~/org/my.org")))
  '(org-agenda-hide-tags-regexp "DAILIES")
  '(org-enforce-todo-dependencies t)
  '(org-log-done (quote note))
@@ -23,11 +23,11 @@
  '(org-refile-targets
    (quote
     ((nil :maxlevel . 5)
-     (org-agenda-files :maxlevel . 2))))
+     (org-agenda-files :maxlevel . 1))))
  '(org-track-ordered-property-with-tag nil)
  '(package-selected-packages
    (quote
-    (org-gcal evil-easymotion nlinum aggressive-indent fzf evil-mu4e diminish expand-region company org-pomodoro auctex pdf-tools which-key web-mode rainbow-delimiters markdown-mode projectile exec-path-from-shell comment-tags browse-kill-ring beacon auto-complete evil-numbers evil-mc evil-surround evil swiper counsel ivy paredit ag)))
+    (smex org-gcal evil-easymotion nlinum aggressive-indent fzf evil-mu4e diminish expand-region company org-pomodoro auctex pdf-tools which-key web-mode rainbow-delimiters markdown-mode projectile exec-path-from-shell comment-tags browse-kill-ring beacon auto-complete evil-numbers evil-mc evil-surround evil swiper counsel ivy paredit ag)))
  '(pdf-view-midnight-colors (quote ("#655370" . "#fbf8ef")))
  '(projectile-mode t nil (projectile))
  '(scroll-bar-mode nil)

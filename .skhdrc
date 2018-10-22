@@ -170,11 +170,11 @@ shift + alt - s : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-windo
 shift + alt - w : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge north
 shift + alt - d : chunkc tiling::window --use-temporary-ratio 0.1 --adjust-window-edge east
 
-## decrease region size
-shift + cmd - a : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
-shift + cmd - s : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
-shift + cmd - w : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
-shift + cmd - d : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
+### decrease region size
+#shift + cmd - a : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge west
+#shift + cmd - s : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge south
+#shift + cmd - w : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge north
+#shift + cmd - d : chunkc tiling::window --use-temporary-ratio -0.1 --adjust-window-edge east
 
 # set insertion point for focused container
 #ctrl + alt - f : chunkc tiling::window --use-insertion-point cancel
@@ -234,6 +234,7 @@ cmd + ctrl + alt - m : chunkc core::unload ffm.so
 
 
 # emacs
-cmd + alt - n : emacsclient -c -F "((name . \"capture\") (height . 15) (width . 80) (left . 300) (top . 400))" -e '(activate-capture-frame)'
+cmd + alt - n : emacsclient -c -F "((name . \"capture\") (height . 15) (width . 80) (left . 800) (top . 50))" -e '(activate-capture-frame)'
+cmd + alt - 0x2A : emacsclient -c -F "((name . \"noname\") (height . 80) (width . 120) (left . 200) (top . 100))" -e '(toggle-frame-maximized)'
 
 

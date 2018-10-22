@@ -138,6 +138,9 @@ dlgmanager.config
 *.old
 *.log
 tmp/
+.emacs.d/
+.emacs.d
+.terminfo
 
 
 .cargo/

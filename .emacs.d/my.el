@@ -4,7 +4,7 @@
 ;;(add-to-list 'default-frame-alist
 ;;         '(ns-appearance . dark)) ;; or dark - depending on your theme
 (add-to-list 'default-frame-alist '(undecorated . t))
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 
 ;; shell
@@ -396,5 +396,14 @@
               :name "All Inboxes"
               :query "maildir:/odee.ftsi/INBOX OR maildir:/odjhey@gmail.com/INBOX"
               :key ?i))
+
+;; enable inline images
+(setq mu4e-view-show-images t)
+;; use imagemagick, if available
+(when (fboundp 'imagemagick-register-types)
+  (imagemagick-register-types))
+
+
+
 
 (setq tab-width 4)
