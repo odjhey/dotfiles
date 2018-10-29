@@ -3,22 +3,20 @@
 ;;;;;;;;;;;;;;;;;;;;;;;
 
 (add-hook 'org-capture-mode-hook 'evil-insert-state)
-(setq org-default-notes-file "~/org/unfiled.org")
+(setq org-default-notes-file "~/org/my.org")
 ;; Org capture templates
 (setq org-capture-templates
       '(("t"              ; hotkey
 	 "Todo list item" ; name
 	 entry            ; type
-	 (file+headline org-default-notes-file "Unfiled")
+	 (file+headline org-default-notes-file "comment Unfiled")
 	 "* TODO %?\n \n%U %i\n %a" ;template
-	 :empty-lines 1
 	 )
 	("w" ; hotkey
 	 "(Work) Todo list item" ; name
 	 entry ; type
 	 (file+headline "~/org/work.org" "work")
 	 "* TODO %?\n \n%U %i\n" ;template
-	 :empty-lines 1
 	 )
 	("j" "Journal Entry"
 	 entry (file+olp+datetree "~/org/journal.org" "Journal")
@@ -29,11 +27,10 @@
 	("z" ; hotkey
 	 "capture madness" ; name
 	 entry ; type
-	 (file+headline org-default-notes-file "Unfiled")
+	 (file+headline org-default-notes-file "comment Unfiled")
 	 "* TODO %?\n %U\n %i\n %a %(progn (delete-other-windows) \"\")"
-	 :empty-lines 1
 	 )
-	("m" "email" entry (file+headline org-default-notes-file "mail")
+	("m" "email" entry (file+olp org-default-notes-file "comment Unfiled" "mail")
          "* TODO %?\nSCHEDULED: %(org-insert-time-stamp (org-read-date nil t \"+0d\"))\n%a\n")
 	))
 

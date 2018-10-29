@@ -381,29 +381,16 @@
 ;; Replace abbrev-mode lighter with "Abv"
 ;; (diminish 'abbrev-mode "Abv")
 
-(require 'mu4e)
-(require 'org-mu4e)
-(require 'evil-mu4e)
-(setq mu4e-mu-binary "/usr/local/bin/mu")
-;;store link to message if in header view, not to header query
-(setq org-mu4e-link-query-in-headers-mode nil)
-;; Don't ask to quit... why is this the default?
-(setq mu4e-confirm-quit nil)
-
-;; Include a bookmark to open all of my inboxes
-(add-to-list 'mu4e-bookmarks
-             (make-mu4e-bookmark
-              :name "All Inboxes"
-              :query "maildir:/odee.ftsi/INBOX OR maildir:/odjhey@gmail.com/INBOX"
-              :key ?i))
-
 ;; enable inline images
 (setq mu4e-view-show-images t)
 ;; use imagemagick, if available
 (when (fboundp 'imagemagick-register-types)
   (imagemagick-register-types))
 
-
+(load-file 
+ (concat 
+  (file-name-directory user-emacs-directory)
+  "mail.el"))
 
 
 (setq tab-width 4)

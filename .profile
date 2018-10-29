@@ -4,7 +4,6 @@ export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
 export PATH="$HOME/bin:$PATH"
 
 
-
 # TODO add check if has emacs daemon then use emacsclient else use vim
 export EDITOR=vim
 
@@ -193,3 +192,9 @@ alias bupdg="brew update && brew upgrade && brew cleanup && brew prune && brew d
 [ -f ~/safe/.functions ] && source ~/safe/.functions
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
+  . "${HOME}/.gnupg/.gpg-agent-info"
+  export GPG_AGENT_INFO
+fi
+

@@ -86,9 +86,9 @@
 ;;    "lisp/abap-mode.el"))
 
 (load-file 
-  (concat 
-    (file-name-directory user-emacs-directory)
-    "my.el"))
+ (concat 
+  (file-name-directory user-emacs-directory)
+  "my.el"))
 
 
 
