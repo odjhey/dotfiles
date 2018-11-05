@@ -32,7 +32,7 @@
 
 ;; Now I set a list of 
 (defvar my-mu4e-account-alist
-  '(("Gmail"
+  '(("odjhey@gmail.com"
      (mu4e-sent-folder "/sent")
      (user-mail-address "odjhey@gmail.com")
      (smtpmail-smtp-user "odjhey")
@@ -42,7 +42,7 @@
      (smtpmail-smtp-service 587)
      )
     ("odee.ftsi"
-     (mu4e-sent-folder "sent")
+     (mu4e-sent-folder "/sent")
      (user-mail-address "odee.pacalso@fasttrackph.com")
      (smtpmail-smtp-user "odee.pacalso@fasttrackph.com")
      (smtpmail-local-domain "fasttrackph.com")
