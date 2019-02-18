@@ -42,8 +42,8 @@ chunkc core::hotload 0
 #
 
 chunkc set global_desktop_mode           float
-chunkc set 2_desktop_mode                bsp
-chunkc set 3_desktop_mode                monocle
+chunkc set 2_desktop_mode                float
+chunkc set 3_desktop_mode                float
 
 # chunkc set 1_desktop_tree                ~/.chunkwm_layouts/test_1
 

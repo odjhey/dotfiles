@@ -1,3 +1,8 @@
+
+#Locales
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
+
 # Add Paths
 export PATH=/usr/local/opt/texinfo/bin:${PATH}
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
@@ -5,7 +10,8 @@ export PATH="$HOME/bin:$PATH"
 
 
 # TODO add check if has emacs daemon then use emacsclient else use vim
-export EDITOR=vim
+export EDITOR=nvim
+export ZVIM=nvim
 
 # custom scripts
 export PATH="$PATH:$HOME/bin:$HOME/bin/scripts"
@@ -58,8 +64,9 @@ fq() {
 [ -f ~/.fzf/.functions ] && source ~/.fzf/.functions
 
 # vim
-alias vi="vim"
-alias v="vim"
+alias vi="$ZVIM"
+alias vim="$ZVIM"
+alias v="$ZVIM"
 alias vipb="pbpaste | vi -"
 vq() {
   $EDITOR `$@`
@@ -72,7 +79,8 @@ alias ecli="emacs -nw"
 alias bemacsd="brew services restart emacs-plus"
 
 # shorts
-alias ctags="`brew --prefix`/bin/ctags"
+# alias ctags="`brew --prefix`/bin/ctags"
+alias ctags="`brew --prefix`/Cellar/ctags/5.8_1/bin/ctags"
 alias ci="code-insiders"
 alias cia="code-insiders -a"
 # add alias field = aws print %1
@@ -81,6 +89,7 @@ alias strip-ht="col -xb"
 
 # fast conf edit
 alias vimrc="$EDITOR ~/.vim/vimrc"
+alias nvimrc="$EDITOR ~/.config/nvim/init.vim"
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
 
@@ -186,7 +195,8 @@ export FZF_DEFAULT_COMMAND='fd --type f --hidden --exclude .git'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Homebrew
-alias bupdg="brew update && brew upgrade && brew cleanup && brew prune && brew doctor"
+# alias bupdg="brew update && brew upgrade && brew cleanup && brew prune && brew doctor"
+alias bupdg="brew update && brew upgrade && brew cleanup && brew doctor"
 
 [ -f ~/safe/.aliases ] && source ~/safe/.aliases
 [ -f ~/safe/.functions ] && source ~/safe/.functions

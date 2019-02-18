@@ -4,6 +4,7 @@
 
 export ZSH=/Users/Odz/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
+fpath+=~/.zfunc 
 
 # Initialize Advance Prompt Support
 setopt PROMPT_SUBST

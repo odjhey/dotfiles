@@ -10,7 +10,6 @@ set t_Co=256
 execute pathogen#infect()
 set rtp+=/usr/local/opt/fzf
 
-
 set mouse=a
 
 set hidden " allow unsaved background buffers and remember marks/undo for them 
@@ -332,7 +331,7 @@ set concealcursor=nvic
 "syntax keyword function function conceal cchar=λ
 "syntax keyword vartest var conceal cchar=#
 
-let g:UltiSnipsEditSplit="vertical"
+"let g:UltiSnipsEditSplit="vertical"
 
 "let g:scroll_position_auto_enable=0
 let g:scroll_position_marker = '⇒' 
@@ -383,28 +382,23 @@ let g:rbpt_loadcmd_toggle = 0
 
 let g:indentLine_char = '┆'
 
-
 let g:surround_{char2nr('-')} = "<% \r %>"
 let g:surround_{char2nr('=')} = "<%= \r %>"
 let g:surround_{char2nr('8')} = "/* \r */"
 let g:surround_{char2nr('s')} = " \r"
 let g:surround_{char2nr('^')} = "/^\r$/"
 
-" Notes.vim {{{
-augroup notes_config
-  autocmd!
-  let g:notes_directories = ['~/Dropbox/Notes']
-augroup END
-" }}}
-
-
+"" Notes.vim {{{
+"augroup notes_config
+"  autocmd!
+"  let g:notes_directories = ['~/Dropbox/Notes']
+"augroup END
+"" }}}
 
 " Match it
 packadd! matchit
 
-
-
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-let g:UltiSnipsExpandTrigger="<tab>"
-let g:UltiSnipsJumpForwardTrigger="<c-b>"
-let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
