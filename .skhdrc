@@ -103,16 +103,30 @@ shift + alt - l : chunkc tiling::window --swap east
 # shift + cmd - l : chunkc tiling::window --warp east
 
 # make floating window fill screen
-cmd + alt - k     : chunkc tiling::window --grid-layout 1:1:0:0:1:1
-
+cmd + alt - f     : chunkc tiling::window --grid-layout 1:1:0:0:1:1
+# cmd + alt + shift + ctrl - f     : chunkc tiling::window --grid-layout 1:1:0:0:1:1
+cmd + alt + shift + ctrl - t     : chunkc tiling::window --grid-layout 1:1:0:0:1:1
 # make floating window fill screen
-cmd + alt - j   : chunkc tiling::window --grid-layout 2:1:0:2:1:1
+cmd + alt - j   : chunkc tiling::window --grid-layout 2:1:0:1:1:1
+cmd + alt - k   : chunkc tiling::window --grid-layout 2:1:0:0:1:1
+cmd + alt + shift + ctrl - j   : chunkc tiling::window --grid-layout 2:1:0:1:1:1
+cmd + alt + shift + ctrl - d   : chunkc tiling::window --grid-layout 2:1:0:1:1:1
+cmd + alt + shift + ctrl - k   : chunkc tiling::window --grid-layout 2:1:0:0:1:1
+cmd + alt + shift + ctrl - e   : chunkc tiling::window --grid-layout 2:1:0:0:1:1
 
 # make floating window fill left-half of screen
-cmd + alt - h   : chunkc tiling::window --grid-layout 1:2:0:0:1:1
+cmd + alt - h   : chunkc tiling::window --grid-layout 1:40:0:0:21:1
+cmd + alt + shift + ctrl - h   : chunkc tiling::window --grid-layout 1:40:0:0:21:1
+cmd + alt + shift + ctrl - s   : chunkc tiling::window --grid-layout 1:40:0:0:21:1
 
 # make floating window fill right-half of screen
-cmd + alt - l  : chunkc tiling::window --grid-layout 1:2:1:0:1:1
+cmd + alt - l  : chunkc tiling::window --grid-layout 1:40:21:0:19:1
+cmd + alt + shift + ctrl - l  : chunkc tiling::window --grid-layout 1:40:21:0:19:1
+cmd + alt + shift + ctrl - f  : chunkc tiling::window --grid-layout 1:40:21:0:19:1
+
+# make floating window fill mini top-right of screen
+# cmd + alt - p  : chunkc tiling::window --grid-layout 8:8:5:0:3:1 # this shortcut is used by eclipse
+cmd + alt - o  : chunkc tiling::window --grid-layout 8:8:5:0:5:1
 
 # fast focus desktop
 # cmd + alt - x : chunkc tiling::desktop --focus $(chunkc get _last_active_desktop)
@@ -123,13 +137,40 @@ cmd + alt - 2 : chunkc tiling::desktop --focus 2
 cmd + alt - 3 : chunkc tiling::desktop --focus 3
 cmd + alt - 4 : chunkc tiling::desktop --focus 4
 cmd + alt - 5 : chunkc tiling::desktop --focus 5
+cmd + alt - 6 : chunkc tiling::desktop --focus 6
+cmd + alt - 7 : chunkc tiling::desktop --focus 7
+cmd + alt - 8 : chunkc tiling::desktop --focus 8
+cmd + alt - 9 : chunkc tiling::desktop --focus 9
+cmd + alt + shift + ctrl - 1 : chunkc tiling::desktop --focus 1
+cmd + alt + shift + ctrl - 2 : chunkc tiling::desktop --focus 2
+cmd + alt + shift + ctrl - 3 : chunkc tiling::desktop --focus 3
+cmd + alt + shift + ctrl - 4 : chunkc tiling::desktop --focus 4
+cmd + alt + shift + ctrl - 5 : chunkc tiling::desktop --focus 5
+cmd + alt + shift + ctrl - 6 : chunkc tiling::desktop --focus 6
+cmd + alt + shift + ctrl - 7 : chunkc tiling::desktop --focus 7
+cmd + alt + shift + ctrl - 8 : chunkc tiling::desktop --focus 8
+cmd + alt + shift + ctrl - 9 : chunkc tiling::desktop --focus 9
 # cmd + alt - 6 : chunkc tiling::desktop --focus 6
 # cmd + alt - 7 : chunkc tiling::desktop --focus 7
 
 # send window to desktop
 #shift + alt - x : chunkc tiling::window --send-to-desktop $(chunkc get _last_active_desktop)
-cmd + alt - z : chunkc tiling::window --send-to-desktop prev
-cmd + alt - c : chunkc tiling::window --send-to-desktop next
+cmd + alt + shift + ctrl - z : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
+cmd + alt + shift + ctrl - c : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
+cmd + alt - z : chunkc tiling::window --send-to-desktop prev; chunkc tiling::desktop --focus prev
+cmd + alt - c : chunkc tiling::window --send-to-desktop next; chunkc tiling::desktop --focus next
+
+cmd + alt + ctrl - 1 : chunkc tiling::window --send-to-desktop 1; chunkc tiling::desktop --focus 1
+cmd + alt + ctrl - 2 : chunkc tiling::window --send-to-desktop 2; chunkc tiling::desktop --focus 2
+cmd + alt + ctrl - 3 : chunkc tiling::window --send-to-desktop 3; chunkc tiling::desktop --focus 3
+cmd + alt + ctrl - 4 : chunkc tiling::window --send-to-desktop 4; chunkc tiling::desktop --focus 4
+cmd + alt + ctrl - 5 : chunkc tiling::window --send-to-desktop 5; chunkc tiling::desktop --focus 5
+cmd + alt + ctrl - 6 : chunkc tiling::window --send-to-desktop 6; chunkc tiling::desktop --focus 6
+cmd + alt + ctrl - 7 : chunkc tiling::window --send-to-desktop 7; chunkc tiling::desktop --focus 7
+cmd + alt + ctrl - 8 : chunkc tiling::window --send-to-desktop 8; chunkc tiling::desktop --focus 8
+cmd + alt + ctrl - 9 : chunkc tiling::window --send-to-desktop 9; chunkc tiling::desktop --focus 9
+
+
 #shift + alt - 1 : chunkc tiling::window --send-to-desktop 1
 #shift + alt - 2 : chunkc tiling::window --send-to-desktop 2
 #shift + alt - 3 : chunkc tiling::window --send-to-desktop 3
@@ -237,4 +278,8 @@ cmd + ctrl + alt - m : chunkc core::unload ffm.so
 cmd + alt - n : emacsclient -c -F "((name . \"capture\") (height . 15) (width . 80) (left . 800) (top . 50))" -e '(activate-capture-frame)'
 cmd + alt - 0x2A : emacsclient -c -F "((name . \"noname\") (width . 120) (left . 200) (top . 100))" 
 
+cmd + ctrl + alt + shift - q : /usr/local/Cellar/cliclick/4.0.1/bin/cliclick c:100,100
+cmd + ctrl + alt + shift - y : /usr/local/Cellar/cliclick/4.0.1/bin/cliclick c:100,100
+
+cmd + ctrl + alt + shift - Y : /usr/local/Cellar/cliclick/4.0.1/bin/cliclick c:100,100
 

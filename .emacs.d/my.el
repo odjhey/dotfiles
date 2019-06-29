@@ -1,3 +1,4 @@
+
 ;; Frame
 (add-to-list 'default-frame-alist
 			 '(ns-transparent-titlebar . t))
@@ -393,3 +394,8 @@
   "mail.el"))
 
 (setq tab-width 4)
+
+(require 'org-taskjuggler)
+
+
+

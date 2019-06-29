@@ -152,3 +152,29 @@ Armok Vision/
 .zfunc/
 
 VirtualBox VMs/
+
+
+.Genymobile
+.dbshell
+
+
+.emulator_console_auth_token
+.expo/
+.ipython/
+.jupyter/
+.keras/
+.lbryum/
+.matplotlib/
+.mongodb/
+.python_history
+.rndebugger_port
+.rndebuggerrc
+.v8flags*
+.vscode-react-native/
+.zcompdump*
+.zoomus/
+AndroidStudioProjects/
+Applications (Parallels)/
+Virtual Machines.localized/
+
+

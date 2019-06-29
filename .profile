@@ -16,6 +16,10 @@ export ZVIM=nvim
 # custom scripts
 export PATH="$PATH:$HOME/bin:$HOME/bin/scripts"
 
+# ruby gems
+gembin=`(gem env | sed -n "s/.*EXECUTABLE DIRECTORY: \(.*\)/\1/p")`
+export PATH=$gembin:$PATH
+
 # rm, cp, mv
 alias mv="mv -v"
 alias cp="cp -v"
@@ -184,6 +188,7 @@ export GOROOT="$(brew --prefix golang)/libexec"
 
 # ADB
 export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
+export ANDROID_HOME="/Users/Odz/Library/Android/sdk"
 
 # MacOS
 alias afk="/System/Library/CoreServices/Menu\ Extras/User.menu/Contents/Resources/CGSession -suspend"
@@ -208,3 +213,6 @@ if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
   export GPG_AGENT_INFO
 fi
 
+if [ -f $(brew --prefix)/etc/bash_completion ]; then
+. $(brew --prefix)/etc/bash_completion
+fi

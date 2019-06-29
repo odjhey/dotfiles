@@ -73,7 +73,7 @@ chunkc set mouse_resize_window           \"ctrl shift 1\"
 chunkc set mouse_motion_interval         35
 
 chunkc set preselect_border_color        0xffd75f5f
-chunkc set preselect_border_width        5
+chunkc set preselect_border_width        2
 chunkc set preselect_border_radius       0
 
 
@@ -110,8 +110,8 @@ chunkc set ffm_standby_on_float          0
 #       if chunkc plugin_dir is not set, the absolutepath is necessary.
 #
 
-chunkc core::load border.so
-chunkc core::load ffm.so
+# chunkc core::load border.so
+# chunkc core::load ffm.so
 chunkc core::load purify.so
 chunkc core::load tiling.so
 
