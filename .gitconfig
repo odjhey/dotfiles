@@ -1,5 +1,5 @@
 [user]
-	name = Odelon Jhey Pacalso
+	name = Odee
 	email = odjhey@github.com
 [color]
 	ui = auto
@@ -17,3 +17,10 @@
 
 [github]
 	user = odjhey
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[credential]
+	helper = osxkeychain

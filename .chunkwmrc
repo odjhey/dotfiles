@@ -42,7 +42,7 @@ chunkc core::hotload 0
 #
 
 chunkc set global_desktop_mode           float
-chunkc set 2_desktop_mode                float
+chunkc set 2_desktop_mode                bsp
 chunkc set 3_desktop_mode                float
 
 # chunkc set 1_desktop_tree                ~/.chunkwm_layouts/test_1
@@ -111,7 +111,7 @@ chunkc set ffm_standby_on_float          0
 #
 
 # chunkc core::load border.so
-# chunkc core::load ffm.so
+chunkc core::load ffm.so
 chunkc core::load purify.so
 chunkc core::load tiling.so
 
