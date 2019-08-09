@@ -14,6 +14,8 @@
   cm=commit -m
   amend=commit --amend
   d=diff
+  cmaster=checkout master
+  c=checkout
 
 [github]
 	user = odjhey

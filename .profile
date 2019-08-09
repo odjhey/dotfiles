@@ -59,6 +59,9 @@ alias g='git'
 alias cdgr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
 
+# yar
+alias y='yarn'
+
 # FZF
 fq() {
   fzf -q "$@"
@@ -207,6 +210,11 @@ alias bupdg="brew update && brew upgrade && brew cleanup && brew doctor"
 [ -f ~/safe/.functions ] && source ~/safe/.functions
 
 export PATH="$HOME/.cargo/bin:$PATH"
+
+# wireshark
+export PATH="$(brew --prefix wireshark)/bin:$PATH"
+
+
 
 if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
   . "${HOME}/.gnupg/.gpg-agent-info"
