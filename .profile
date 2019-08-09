@@ -34,6 +34,7 @@ alias -- -="cd -"
 alias cdd="cd $HOME/Desktop"
 alias cddl="cd $HOME/Downloads"
 alias cdp="cd $HOME/proj"
+alias cdft="cd $HOME/Desktop/ftmonorepo"
 cdgo() {
   cd "$GOPATH/src/github.com/"
   if ! ( [ -z "$@" ] )
