@@ -59,6 +59,12 @@ alias lsf="ls -lF -G | grep --color=never '^-'"
 alias g='git'
 alias cdgr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+gitclone() {
+    rm -rf `basename $1 .git`
+    git clone $1
+    cd `basename $1 .git`
+    git reset --hard $2
+}
 
 # yar
 alias y='yarn'
@@ -205,7 +211,7 @@ export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 
 # Homebrew
 # alias bupdg="brew update && brew upgrade && brew cleanup && brew prune && brew doctor"
-alias bupdg="brew update && brew upgrade && brew cleanup && brew doctor"
+alias bupdg="brew update && brew upgrade && brew cleanup && brew doctor && rupstup update"
 
 [ -f ~/safe/.aliases ] && source ~/safe/.aliases
 [ -f ~/safe/.functions ] && source ~/safe/.functions

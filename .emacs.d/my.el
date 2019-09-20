@@ -266,10 +266,10 @@
 
 ;; look for bindings
 ;;Increment / Decrement numbers
-(global-set-key (kbd "C-=") 'evil-numbers/inc-at-pt)
-(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
-(define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
-(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
+;;(global-set-key (kbd "C-=") 'evil-numbers/inc-at-pt)
+;;(global-set-key (kbd "C--") 'evil-numbers/dec-at-pt)
+;;(define-key evil-normal-state-map (kbd "C-=") 'evil-numbers/inc-at-pt)
+;;(define-key evil-normal-state-map (kbd "C--") 'evil-numbers/dec-at-pt)
 
 ;;Use j/k for browsing wrapped lines
 (define-key evil-normal-state-map (kbd "j") 'evil-next-visual-line)
@@ -388,14 +388,17 @@
 (when (fboundp 'imagemagick-register-types)
   (imagemagick-register-types))
 
-(load-file 
- (concat 
-  (file-name-directory user-emacs-directory)
-  "mail.el"))
+;;(load-file 
+;; (concat 
+;;  (file-name-directory user-emacs-directory)
+;;  "mail.el"))
 
 (setq tab-width 4)
 
 (require 'org-taskjuggler)
+
+(org-archive-location
+ "org/archive/%s_archive::")
 
 
 
