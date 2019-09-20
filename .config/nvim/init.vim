@@ -1,0 +1,415 @@
+set nocompatible
+
+call plug#begin('~/.local/share/nvim/plugged')
+Plug 'morhetz/gruvbox'
+Plug 'w0rp/ale'
+Plug 'tpope/vim-surround'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'mhinz/vim-signify'
+Plug 'prettier/vim-prettier'
+Plug 'tpope/vim-sensible'
+Plug 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'mattn/emmet-vim'
+Plug 'prettier/vim-prettier'
+call plug#end()
+
+colorscheme gruvbox
+set signcolumn=yes
+
+set mouse=a
+
+set hidden                    " allow unsaved background buffers and remember marks/undo for them 
+set history=10000             " remember more commands and search history
+set expandtab 
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
+
+syntax on
+filetype plugin indent on
+
+set autoindent " follow indent of previous line
+set scrolloff=5
+set incsearch
+set hlsearch
+set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
+set title " show filename on titlebar
+" unhighlight on Enter
+"
+nnoremap <CR> :nohlsearch<CR> 
+
+set report=0    " Report the number of lines changed. (substitute)
+set ttyfast
+set wildmenu    " Use <tab> when completing a command in cli
+set showmatch
+
+" LOL got these from TPOPE - QoL
+nnoremap Y  y$
+inoremap <C-C> <Esc>`^
+
+" Navigation
+" Speed up viewport scrolling
+nnoremap <C-e> 4<C-e>
+nnoremap <C-y> 4<C-y>
+
+" Does not work as i like - weird
+" vnoremap     <M-<> <gv
+" vnoremap     <M->> >gv
+" vnoremap     <Space> I<Space><Esc>gv
+
+" -*- vim -*- vim:set ft=vim et sw=0 sts=2:
+" -*- vim -*- vim:set ft=vim et sw=2 sts=2:
+inoremap <C-X>^ <C-R>=substitute(&commentstring,' \=%s\>'," -*- ".&ft." -*- vim:set ft=".&ft." ".(&et?"et":"noet")." sw=".&sw." sts=".&sts.':','')<CR>
+
+inoremap <M-0>      <C-O>0
+cnoremap <C-O>      <Up>
+inoremap <M-o>      <C-O>o
+inoremap <M-O>      <C-O>O
+inoremap <M-i>      <Left>
+inoremap <M-I>      <C-O>^
+inoremap <M-A>      <C-O>$
+noremap! <C-J>      <Down>
+noremap! <C-K><C-K> <Up>
+
+" remove backups forever
+set nobackup
+set nowritebackup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip+=/safe/*
+set directory=~/.vim/swaps     " Set directory for swap files.
+
+set showcmd
+set noshowmode "don't show mode, cause airline
+
+" If a file is changed outside of vim, automatically reload it without asking
+set autoread
+
+" Prevent Vim from clobbering the scrollback buffer. See
+" http://www.shallowsky.com/linux/noaltscreen.html
+set t_ti= t_te=
+
+" Use the old vim regex engine (version 1, as opposed to version 2, which was
+" introduced in Vim 7.3.969). The Ruby syntax highlighting is significantly
+" slower with the new regex engine.
+set re=1
+
+" disable for now:  Move around splits with <c-hjkl>
+"nnoremap <c-j> <c-w>j
+"nnoremap <c-k> <c-w>k
+"nnoremap <c-h> <c-w>h
+"nnoremap <c-l> <c-w>l
+
+" FZF {{{
+nnoremap <c-t> :FZF<CR>
+imap <c-x><c-f> <plug>(fzf-complete-path)
+imap <c-x><c-l> <plug>(fzf-complete-line)
+nnoremap <c-b> :Buffer<CR>
+"}}}
+
+"insert new line
+map <leader><Enter> o<ESC> 
+
+" Ag instead of Ack
+if executable('ag')
+  let g:ackprg = 'ag --vimgrep'
+endif
+
+" min split heights
+set winheight=35
+:silent! set winminheight=5
+
+
+" highlight current line, but only in active window #Stolen from anishathalye
+augroup CursorLineOnlyInActiveWindow
+    autocmd!
+    autocmd VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+    autocmd WinLeave * setlocal nocursorline
+augroup END
+
+" Workspace Properties {{{
+set guioptions=
+"set lines=50
+"set columns=20
+set colorcolumn=80
+"Splits
+set splitbelow
+set splitright
+set nu "Ruler (vertical)
+"set relativenumber
+set norelativenumber
+"}}}
+" File Type Properties  {{{
+set encoding=utf-8 nobomb
+set nowrap
+set list
+set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·
+set cursorline
+"Text Display
+"if has("gui_macvim")
+"  set guifont=Menlo
+"elseif has("gui_running")
+"  set guifont=Consolas:h10
+"endif
+set background=dark
+
+if has('gui_running')
+  colorscheme solarized
+  "I dont like the default Solarized background
+  hi Normal guibg=#1c1c1c
+  hi Normal guifg=#c9c9c9
+  hi LineNr guibg=#1a1a1a
+  hi LineNr guifg=#c9c9c9
+else
+  "colorscheme pablo
+  "colorscheme badwolf
+  let g:gruvbox_contrast_dark = "hard"
+  let g:gruvbox_contrast_soft = "hard"
+  colorscheme gruvbox
+  "colorscheme sift
+  "colorscheme base
+  "colorscheme luna-term
+endif
+
+"always show filename above status bar
+set laststatus=2
+"}}}
+" Bind Wanted Keys {{{
+"remaps
+"let mapleader = "\\"
+let mapleader = " "
+"inoremap <c-s> <Esc>:w<CR>
+"noremap <Tab> %
+"imap <S-Space> <Esc>
+
+"this bind is for folding using space
+"nnoremap <Space> za    
+nnoremap <leader><CR> <C-^>
+
+"}}}
+" Unbind Sh**y keys {{{
+" I no longer need to unbind the arrow keys as im no longer using it
+"for prefix in ['i', 'n', 'v']
+"  for key in ['<Up>', '<Down>', '<Left>', '<Right>']
+"    exe prefix . 'noremap ' . key . ' <Nop>'
+"  endfor
+"endfor
+"}}}
+
+" Folding {{{
+set foldmethod=marker
+"set foldcolumn=2
+function! MyFoldText() " {{{
+    let line = getline(v:foldstart)
+
+    let nucolwidth = &fdc + &number * &numberwidth
+    let windowwidth = winwidth(0) - nucolwidth - 3
+    let foldedlinecount = v:foldend - v:foldstart
+
+    " expand tabs into spaces
+    let onetab = strpart('          ', 0, &tabstop)
+    let line = substitute(line, '\t', onetab, 'g')
+
+    let line = strpart(line, 0, windowwidth - 2 -len(foldedlinecount))
+    let fillcharcount = windowwidth - len(line) - len(foldedlinecount)
+    return line . '…' . repeat("…",fillcharcount) . foldedlinecount . '…' . ' '
+endfunction " }}}
+set foldtext=MyFoldText()
+"}}}
+
+"" Uncategorized {{{
+"" Save when losing focus
+"au FocusLost * :silent! wall
+""}}}
+" Line Return {{{
+" Make sure Vim returns to the same line when you reopen a file. check
+" vimhelp see last-position-jump
+augroup vimrcEx
+  autocmd!
+  autocmd BufReadPost *
+      \ if line("'\"") > 0 && line("'\"") <= line("$") |
+      \     execute 'normal! g`"zvzz' |
+      \ endif
+augroup END
+
+" }}}
+" Hacks/fixes {{{
+" For non-cygwin
+":set timeout timeoutlen=1000 ttimeoutlen=100
+" Insert only one space when joining lines that contain sentence-terminating
+" punctuation like `.`.
+set nojoinspaces
+set nostartofline
+" }}}
+" Custom Funcs {{{
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RemoveFancyCharacters COMMAND
+" Remove smart quotes, etc.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RemoveFancyCharacters()
+  let typo = {}
+  let typo["“"] = '"'
+  let typo["”"] = '"'
+  let typo["‘"] = "'"
+  let typo["’"] = "'"
+  let typo["–"] = '--'
+  let typo["—"] = '---'
+  let typo["…"] = '...'
+  :exe ":%s/".join(keys(typo),'\|').'/\=typo[submatch(0)]/ge'
+endfunction
+"don't need this for now
+"command! RemoveFancyCharacters :call RemoveFancyCharacters()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" MULTIPURPOSE TAB KEY
+" Indent if we're at the beginning of a line. Else, do completion.
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! InsertTabWrapper()
+  let col = col('.') - 1
+  if !col || getline('.')[col - 1] !~ '\k'
+    return "\<tab>"
+  else
+    return "\<c-p>"
+  endif
+endfunction
+" inoremap <expr> <tab> InsertTabWrapper()
+" inoremap <s-tab> <c-n>
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" RENAME CURRENT FILE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! RenameFile()
+  let old_name = expand('%')
+  let new_name = input('New file name: ', expand('%'), 'file')
+  if new_name != '' && new_name != old_name
+    exec ':saveas ' . new_name
+    exec ':silent !rm ' . old_name
+    redraw!
+  endif
+endfunction
+map <leader>n :call RenameFile()<cr>
+"}}}
+"add split line
+"CTags
+"Plugin settings
+"Text Objects
+"Ack motions
+"Error toggles
+"Utils
+"Hg
+"Environments (GUI/Console)
+"Nyan!
+
+" vim:foldmethod=marker:foldlevel=0
+
+" 09232015 --- New Stuff --- Cygwin Block Cursor On Visual Mode
+let &t_ti.="\e[1 q"
+let &t_SI.="\e[5 q"
+let &t_EI.="\e[1 q"
+let &t_te.="\e[0 q"
+
+silent! dig -. 8230  "U+2026=…  HORIZONTAL ELLIPSIS (CTRL+K in I mode)
+silent! dig PR 9654
+
+" Map the conceal characters to their expanded forms.
+"inoremap <silent> @ <C-r>=syntax_expand#expand("@", "this")<CR>
+"inoremap <silent> # <C-r>=syntax_expand#expand("#", "prototype")<CR>
+"inoremap <silent> < <C-r>=syntax_expand#expand_head("<", "return")<CR>
+
+set conceallevel=0
+" Keeps everything concealed at all times. Even when my cursor is on the word.
+set concealcursor=nvic
+
+"" JavaScript thanks to pangloss/vim-javascript
+"let g:javascript_conceal_function   = "λ"
+"let g:javascript_conceal_null       = "ø"
+""let g:javascript_conceal_this       = "@"
+""let g:javascript_conceal_return     = ">"
+""let g:javascript_conceal_undefined  = "¿"
+""let g:javascript_conceal_NaN        = "ℕ"
+"let g:javascript_conceal_prototype  = "¶"
+"let g:javascript_conceal_static     = "•"
+"let g:javascript_conceal_super      = "Ω"
+
+" For some reason, vim-javascript conceal does not work on cygwin ... weird
+" See below for some quickfix.
+" ### vim-javascript/syntax/javascript.vim clashes with the default config,
+" ### to get around the situation, I have moved the foollowing files to...:
+" ### mv ftplugin/javascript.vim      ftplugin/javascript.vim.old
+" ### mv syntax/javascript.vim        syntax/javascript.vim.old
+"syntax keyword function function conceal cchar=λ
+"syntax keyword vartest var conceal cchar=#
+
+"let g:UltiSnipsEditSplit="vertical"
+
+"let g:scroll_position_auto_enable=0
+let g:scroll_position_marker = '⇒' 
+"hi SignColumn           ctermbg=232 
+hi ScrollPositionMarker ctermfg=208 ctermbg=237 
+"hi ScrollPositionMarker guibg=#1a1a1a guifg=#c9c9c9
+
+let g:CommandTFileScanner="git"
+
+"let g:syntastic_javascript_checkers = ['eslint']
+
+
+"Powerline is deprecated, use lightline
+"let g:Powerline_symbols = 'fancy'
+"let g:Powerline_colorscheme = 'solarized256'
+let g:lightline = {
+      \ 'colorscheme': 'gruvbox',
+      \ '': {
+      \   'left': [['mode', 'paste'], 
+      \            ['readonly', 'filename', 'modified']]
+      \ },
+      \ }
+
+
+" october 2017
+cnoremap %% <C-R>=expand('%:h').'/'<cr>
+
+let g:rbpt_colorpairs = [
+    \ ['brown',       'RoyalBlue3'],
+    \ ['Darkblue',    'SeaGreen3'],
+    \ ['darkgray',    'DarkOrchid3'],
+    \ ['darkgreen',   'firebrick3'],
+    \ ['darkcyan',    'RoyalBlue3'],
+    \ ['darkred',     'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['brown',       'firebrick3'],
+    \ ['gray',        'RoyalBlue3'],
+    \ ['black',       'SeaGreen3'],
+    \ ['darkmagenta', 'DarkOrchid3'],
+    \ ['Darkblue',    'firebrick3'],
+    \ ['darkgreen',   'RoyalBlue3'],
+    \ ['darkcyan',    'SeaGreen3'],
+    \ ['darkred',     'DarkOrchid3'],
+    \ ['red',         'firebrick3'],
+    \ ]
+let g:rbpt_max = 16
+let g:rbpt_loadcmd_toggle = 0
+
+let g:indentLine_char = '┆'
+
+let g:surround_{char2nr('-')} = "<% \r %>"
+let g:surround_{char2nr('=')} = "<%= \r %>"
+let g:surround_{char2nr('8')} = "/* \r */"
+let g:surround_{char2nr('s')} = " \r"
+let g:surround_{char2nr('^')} = "/^\r$/"
+
+"" Notes.vim {{{
+"augroup notes_config
+"  autocmd!
+"  let g:notes_directories = ['~/Dropbox/Notes']
+"augroup END
+"" }}}
+
+" Match it
+packadd! matchit
+
+" Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+
