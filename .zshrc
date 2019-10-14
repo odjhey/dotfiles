@@ -2,6 +2,7 @@
 # https://github.com/odjhey/dotfiles
 # Mostly from failbowl https://github.com/garybernhardt/dotfiles/
 
+plugins=(git-flow-completion zsh-syntax-highlighting)
 export ZSH=/Users/Odz/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 fpath+=~/.zfunc 
@@ -65,7 +66,5 @@ function up()
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 
-
-plugins=(git-flow-completion)
-
+[ -f /usr/local/etc/profile.d/autojump.sh ] && . /usr/local/etc/profile.d/autojump.sh
 

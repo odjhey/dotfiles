@@ -180,3 +180,6 @@ Virtual Machines.localized/
 
 .react-native-cli/
 GameMakerStudio2/
+
+.tooling/
+.config/nvim/*.netrwhist

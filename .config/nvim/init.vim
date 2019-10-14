@@ -1,27 +1,55 @@
 set nocompatible
 
+"FZF
+set rtp+=/usr/local/opt/fzf
+
 call plug#begin('~/.local/share/nvim/plugged')
-Plug 'morhetz/gruvbox'
-Plug 'w0rp/ale'
-Plug 'tpope/vim-surround'
-Plug 'editorconfig/editorconfig-vim'
-Plug 'mhinz/vim-signify'
-Plug 'prettier/vim-prettier'
-Plug 'tpope/vim-sensible'
-Plug 'mxw/vim-jsx'
+"syntax js
 Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+
+"syntax typescript
+Plug 'HerringtonDarkholme/yats'
+Plug 'peitalin/vim-jsx-typescript' "syntax highlight
+Plug 'leafgarland/typescript-vim'
+
+"syntax gql
+Plug 'jparise/vim-graphql'
+
+"ui
+Plug 'morhetz/gruvbox'
+
+"keys
+Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
+
+"services
+Plug 'w0rp/ale'
+Plug 'mhinz/vim-signify'
+" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+" For async completion
+Plug 'Shougo/deoplete.nvim'
+" For Denite features
+Plug 'Shougo/denite.nvim'
+
+"formatters
+Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier'
+Plug 'prettier/vim-prettier' 
+
+
+
+
 call plug#end()
 
 colorscheme gruvbox
-set signcolumn=yes
+set signcolumn=yes:2
 
 set mouse=a
 
 set hidden                    " allow unsaved background buffers and remember marks/undo for them 
 set history=10000             " remember more commands and search history
-set expandtab 
+"set expandtab 
 set tabstop=2
 set shiftwidth=2
 set softtabstop=2
@@ -143,9 +171,16 @@ set norelativenumber
 " File Type Properties  {{{
 set encoding=utf-8 nobomb
 set nowrap
-set list
-set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·
-set cursorline
+set list   
+set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·,space:.,nbsp:░
+"set listchars=
+"set listchars+=tab:·\ 
+"set listchars+=trail:·
+"set listchars+=extends:»
+"set listchars+=precedes:«
+"set listchars+=nbsp:░
+" split style
+set fillchars=vert:▒
 "Text Display
 "if has("gui_macvim")
 "  set guifont=Menlo
@@ -413,3 +448,16 @@ packadd! matchit
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
+  let g:deoplete#enable_at_startup = 1
+
+
+"ALE
+let g:ale_fixers = {
+ \ 'javascript': ['eslint'],
+ \ 'typescript': ['eslint']
+ \ }
+
+let g:ale_sign_error = '❌'
+let g:ale_sign_warning = '⚠️'
+
+let g:ale_fix_on_save = 1
