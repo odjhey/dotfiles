@@ -2,7 +2,7 @@
 # https://github.com/odjhey/dotfiles
 # Mostly from failbowl https://github.com/garybernhardt/dotfiles/
 
-plugins=(git-flow-completion zsh-syntax-highlighting)
+plugins=(git-flow-completion zsh-syntax-highlighting cf)
 export ZSH=/Users/Odz/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 fpath+=~/.zfunc 

@@ -42,6 +42,10 @@ colorword() {
 	echo "%{"$'\e['${(j:;:)s}m"%}"
 }
 
+gitrootdir() {
+	basename $( abspath $(  git rev-parse --show-cdup ) 2>/dev/null || pwd )  2>/dev/null
+}
+
 function minutes_since_last_commit {
     now=`date +%s`
     last_commit=`git log --pretty=format:'%at' -1 2>/dev/null`
@@ -167,6 +171,9 @@ prompt_odz_setup() {
 		PROMPT+="$pc[host]odee$pc[reset]"
 	fi
 
+	#if [ ! -z "$(gitrootdir)" ]; then
+    PROMPT+="/$pc[time]\$(gitrootdir)$pc[reset]"
+	#fi
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
   PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
 # PROMPT+=" $pc[#]\$$pc[reset] "

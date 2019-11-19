@@ -1,5 +1,8 @@
 # open terminal
- cmd - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~/Desktop
+ cmd + alt - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~/Desktop
+ cmd - 0x35 : /Applications/Mission\ Control.app/Contents/MacOS/Mission\ Control 2
+
+
  
 # focus window
 alt - h : yabai -m window --focus west

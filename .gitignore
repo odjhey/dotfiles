@@ -183,3 +183,12 @@ GameMakerStudio2/
 
 .tooling/
 .config/nvim/*.netrwhist
+.tmux/plugins/*
+.degit/*
+.nvm/*
+.nvm/
+.nvm
+.cf/*
+.jssc/*
+history.txt
+.mume/*

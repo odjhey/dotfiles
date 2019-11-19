@@ -20,6 +20,11 @@ export PATH="$PATH:$HOME/bin:$HOME/bin/scripts"
 gembin=`(gem env | sed -n "s/.*EXECUTABLE DIRECTORY: \(.*\)/\1/p")`
 export PATH=$gembin:$PATH
 
+# nvm
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+
 # rm, cp, mv
 alias mv="mv -v"
 alias cp="cp -v"
@@ -32,6 +37,7 @@ alias cd.="cd .."
 alias ...="cd ../.."
 alias -- -="cd -"
 alias cdd="cd $HOME/Desktop"
+alias cdb="cd $HOME/Desktop/brildeas"
 alias cddl="cd $HOME/Downloads"
 alias cdp="cd $HOME/proj"
 alias cdft="cd $HOME/Desktop/ftmonorepo"
@@ -55,6 +61,9 @@ alias lsa='ls -lah'
 alias lsd="ls -lF -G | grep --color=never '^d'"
 alias lsf="ls -lF -G | grep --color=never '^-'"
 
+# tmux
+alias mux="tmuxinator"
+
 # git
 alias g='git'
 alias cdgr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
@@ -66,8 +75,11 @@ gitclone() {
     git reset --hard $2
 }
 
-# yar
+# yarn
 alias y='yarn'
+
+# mongod
+alias mongod='mongod --dbpath ~/.mongodb/data --logpath ~/.mongodb/mongod.log'
 
 # FZF
 fq() {
@@ -114,6 +126,27 @@ export FZF_DEFAULT_OPTS="--height 80%"
 
 # One liner Utils
 alias toplain="perl -pe 's/\x1b\[[0-9;]*[mG]//g'"
+
+abspath() {
+    if [[ -d "$1" ]]
+    then
+        pushd "$1" >/dev/null
+        pwd
+        popd >/dev/null
+    elif [[ -e $1 ]]
+    then
+        pushd "$(dirname "$1")" >/dev/null
+        echo "$(pwd)/$(basename "$1")"
+        popd >/dev/null
+    else
+        echo "$1" does not exist! >&2
+        return 127
+    fi
+}
+
+alias pwdgr='basename $( abspath $(  git rev-parse --show-cdup && pwd  ) )'
+
+
 
 # @PualIrish {{{
 # who is using the laptops iSight camera?
@@ -231,3 +264,9 @@ fi
 if [ -f $(brew --prefix)/etc/bash_completion ]; then
 . $(brew --prefix)/etc/bash_completion
 fi
+
+
+export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
+
+
+

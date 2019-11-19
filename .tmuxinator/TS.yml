@@ -1,0 +1,71 @@
+# /Users/Odz/.tmuxinator/TS.yml
+
+name: TS
+root: ~/Desktop/ftmonorepo/ccmob_alpha/
+
+# Optional tmux socket
+# socket_name: foo
+
+# Note that the pre and post options have been deprecated and will be replaced by
+# project hooks.
+
+# Project hooks
+# Runs on project start, always
+# on_project_start: command
+# Run on project start, the first time
+# on_project_first_start: command
+# Run on project start, after the first time
+# on_project_restart: command
+# Run on project exit ( detaching from tmux session )
+# on_project_exit: command
+# Run on project stop
+# on_project_stop: command
+
+# Runs in each window and pane before window/pane specific commands. Useful for setting up interpreter versions.
+# pre_window: rbenv shell 2.0.0-p247
+
+# Pass command line options to tmux. Useful for specifying a different tmux.conf.
+# tmux_options: -f ~/.tmux.mac.conf
+
+# Change the command to call tmux.  This can be used by derivatives/wrappers like byobu.
+# tmux_command: byobu
+
+# Specifies (by name or index) which window will be selected on project startup. If not set, the first window is used.
+# startup_window: editor
+
+# Specifies (by index) which pane of the specified window will be selected on project startup. If not set, the first pane is used.
+# startup_pane: 1
+
+# Controls whether the tmux session should be attached to automatically. Defaults to true.
+# attach: false
+
+windows:
+  - client:
+      layout: 12d6,127x39,0,0[127x20,0,0,0,127x19,0,21{63x19,0,21,3,63x19,64,21,4}]
+      panes:
+        - android:
+          - cd ccmob_ts
+          - y android
+        - storybook:
+          - cd ccmob_ts
+          - y sb
+        - metro:
+          - cd ccmob_ts
+          - y start
+  - server:
+      layout: tiled
+      panes:
+        - mongo:
+          - cd ccmob_server
+          - mongod
+        - server:
+          - cd ccmob_server
+          - y start
+  - git:
+      layout: d2ae,127x39,0,0{77x39,0,0,2,50x39,78,0,6}
+      panes:
+        - stat:
+          - git status
+        - log:
+          - git log
+
