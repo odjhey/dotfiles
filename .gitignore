@@ -194,3 +194,4 @@ history.txt
 .mume/*
 eclipse-workspace2-2019-09/
 .cljs/
+bin/protoc-3.10.1-osx-x86_64/

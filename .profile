@@ -4,6 +4,7 @@ export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
 
 # Add Paths
+export PATH=/Users/Odz/bin/protoc-3.10.1-osx-x86_64/bin:${PATH}
 export PATH=/usr/local/opt/texinfo/bin:${PATH}
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
 export PATH="$HOME/bin:$PATH"
