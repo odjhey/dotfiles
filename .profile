@@ -134,37 +134,20 @@ alias cl="clear"
 # One liner Utils
 alias toplain="perl -pe 's/\x1b\[[0-9;]*[mG]//g'"
 
-# abspath() {
-#     if [[ -d "$1" ]]
-#     then
-#         pushd "$1" >/dev/null
-#         pwd
-#         popd >/dev/null
-#     elif [[ -e $1 ]]
-#     then
-#         pushd "$(dirname "$1")" >/dev/null
-#         echo "$(pwd)/$(basename "$1")"
-#         popd >/dev/null
-#     else
-#         echo "$1" does not exist! >&2
-#         return 127
-#     fi
-# }
-function abspath() {
-    # generate absolute path from relative path
-    # $1     : relative filename
-    # return : absolute path
-    # From http://stackoverflow.com/a/23002317/514210
-    if [[ -d "$1" ]]; then
-        # dir
-        (cd "$1"; pwd)
-    elif [[ -f "$1" ]]; then
-        # file
-        if [[ $1 == */* ]]; then
-            echo "$(cd "${1%/*}"; pwd)/${1##*/}"
-        else
-            echo "$(pwd)/$1"
-        fi
+abspath() {
+    if [[ -d "$1" ]]
+    then
+        pushd "$1" >/dev/null
+        pwd
+        popd >/dev/null
+    elif [[ -e $1 ]]
+    then
+        pushd "$(dirname "$1")" >/dev/null
+        echo "$(pwd)/$(basename "$1")"
+        popd >/dev/null
+    else
+        echo "$1" does not exist! >&2
+        return 127
     fi
 }
 
