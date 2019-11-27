@@ -194,14 +194,14 @@ prompt_current_dir() {
 # check if home
   if [ "$gitroot" = "$(prompt_odz_basedir)" ]
 	then
-	  if [ $gitrootcharlen -gt 15 ]
+	  if [ $gitrootcharlen -gt 20 ]
 		then
 # show blank, means prompt has 2nd line
 		else
 	    echo ":H"
 		fi
 	else
-	  if [ $gitrootcharlen -gt 15 ]
+	  if [ $gitrootcharlen -gt 20 ]
 		then
 		else
 	    echo ":%1~"
@@ -222,7 +222,7 @@ prompt_current_dir_always() {
 }
 
 prompt_has_newline() {
-	if [ $(prompt_gitrootdir_charlen) -gt 15 ] 
+	if [ $(prompt_gitrootdir_charlen) -gt 20 ] 
 	then
 		echo "
 $(prompt_current_dir_always)"
