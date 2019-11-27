@@ -41,7 +41,8 @@ colorword() {
 }
 
 gitrootdir() {
-	basename $( abspath $(  git rev-parse --show-cdup ) 2>/dev/null || pwd )  2>/dev/null
+#	basename $( abspath $(  git rev-parse --show-cdup ) 2>/dev/null || pwd )  2>/dev/null
+  basename $(  git rev-parse --show-toplevel )
 }
 
 function minutes_since_last_commit {
@@ -165,16 +166,78 @@ prompt_odz_setup() {
   PROMPT="$pc[reset]"
 
 	if [ $verbose ]; then
-		PROMPT+="$pc[host]odee$pc[reset]"
+# Check tmux session
+    if type tmux >/dev/null 2>/dev/null; then
+#	    if [ "$TERM" = "screen" ] && [ -n "$TMUX" ]; then
+      if [ -n "$TMUX" ]; then
+        PROMPT+="$pc[date]tmx$pc[reset]|"
+      else
+      fi
+    else
+    fi
+    PROMPT+="$pc[host]odee$pc[reset]"
 	fi
 
   PROMPT+="/$pc[time]\$(gitrootdir)$pc[reset]"
-	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
+  PROMPT+="$pc[shortpath]\$(prompt_current_dir)$pc[reset]"
   PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
+  PROMPT+="\$(prompt_has_newline)$pc[#]"
   PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT
 	precmd_functions+='prompt_odz_precmd'
+}
+
+prompt_current_dir() {
+	local gitroot=$(gitrootdir)
+	local gitrootcharlen=${#gitroot}
+# check if home
+  if [ "$gitroot" = "$(prompt_odz_basedir)" ]
+	then
+	  if [ $gitrootcharlen -gt 15 ]
+		then
+# show blank, means prompt has 2nd line
+		else
+	    echo ":H"
+		fi
+	else
+	  if [ $gitrootcharlen -gt 15 ]
+		then
+		else
+	    echo ":%1~"
+		fi
+	fi
+}
+
+prompt_current_dir_always() {
+	local gitroot=$(gitrootdir)
+	local gitrootcharlen=${#gitroot}
+# check if home
+  if [ "$gitroot" = "$(prompt_odz_basedir)" ]
+	then
+	  echo "H"
+	else
+	  echo "%1~"
+	fi
+}
+
+prompt_has_newline() {
+	if [ $(prompt_gitrootdir_charlen) -gt 15 ] 
+	then
+		echo "
+$(prompt_current_dir_always)"
+	else
+		echo ""
+	fi
+}
+
+prompt_odz_basedir() {
+  echo $(basename $(pwd))
+}
+
+prompt_gitrootdir_charlen() {
+  local shortpath=$(gitrootdir)
+	echo ${#shortpath}
 }
 
 prompt_odz_precmd() {
