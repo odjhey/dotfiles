@@ -2,7 +2,12 @@
 # https://github.com/odjhey/dotfiles
 # Mostly from failbowl https://github.com/garybernhardt/dotfiles/
 
-plugins=(git-flow-completion zsh-syntax-highlighting cf)
+#plugins=(git-flow-completion zsh-syntax-highlighting cf)
+#plugins=(zsh-syntax-highlighting cf)
+
+export NVM_LAZY_LOAD=true
+plugins=(zsh-nvm)
+
 export ZSH=/Users/Odz/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
 fpath+=~/.zfunc 
@@ -11,11 +16,13 @@ fpath+=~/.zfunc
 setopt PROMPT_SUBST
 autoload -U promptinit
 promptinit
+#prompt odzmin
 prompt odz
 
-# Initialize completion
-autoload -U compinit
-compinit -D
+# I think Oh-my-zsh has this
+## Initialize completion
+#autoload -U compinit
+#compinit -D
 
 # better history
 export HISTSIZE=100000
@@ -62,7 +69,7 @@ function up()
 
 [ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
-# [ -f ~/.profile ] && source ~/.profile
+[ -f ~/.profile ] && source ~/.profile
 
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 

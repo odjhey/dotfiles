@@ -1,3 +1,7 @@
+# Script optimizations
+# brew --prefix is slow
+# export brewprefix=`brew --prefix`
+export brewprefix=`dirname /usr/local/bin`
 
 #Locales
 export LC_ALL=en_US.UTF-8
@@ -8,7 +12,6 @@ export PATH=/Users/Odz/bin/protoc-3.10.1-osx-x86_64/bin:${PATH}
 export PATH=/usr/local/opt/texinfo/bin:${PATH}
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
 export PATH="$HOME/bin:$PATH"
-
 
 # TODO add check if has emacs daemon then use emacsclient else use vim
 export EDITOR=nvim
@@ -21,10 +24,11 @@ export PATH="$PATH:$HOME/bin:$HOME/bin/scripts"
 gembin=`(gem env | sed -n "s/.*EXECUTABLE DIRECTORY: \(.*\)/\1/p")`
 export PATH=$gembin:$PATH
 
-# nvm
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# this guy so slow - refer to lazy loading from zsh plugin zsh-nvm
+## nvm
+#export NVM_DIR="$HOME/.nvm"
+#[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+#[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
 # rm, cp, mv
 alias mv="mv -v"
@@ -83,9 +87,11 @@ alias y='yarn'
 alias mongod='mongod --dbpath ~/.mongodb/data --logpath ~/.mongodb/mongod.log'
 
 # FZF
+export FZF_DEFAULT_OPTS="--height 80%"
 fq() {
   fzf -q "$@"
 }
+[ -f ~/.fzf/.fzf.zsh ] && source ~/.fzf/.fzf.zsh
 
 # More FZF <3 Git
 [ -f ~/.fzf/.functions ] && source ~/.fzf/.functions
@@ -107,7 +113,7 @@ alias bemacsd="brew services restart emacs-plus"
 
 # shorts
 # alias ctags="`brew --prefix`/bin/ctags"
-alias ctags="`brew --prefix`/Cellar/ctags/5.8_1/bin/ctags"
+alias ctags="${brewprefix}/Cellar/ctags/5.8_1/bin/ctags"
 alias ci="code-insiders"
 alias cia="code-insiders -a"
 # add alias field = aws print %1
@@ -119,35 +125,50 @@ alias vimrc="$EDITOR ~/.vim/vimrc"
 alias nvimrc="$EDITOR ~/.config/nvim/init.vim"
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
+alias profile="$EDITOR ~/.profile"
 
 # Enhanced
 alias tre="tree -F -L 1"
 alias cl="clear"
-export FZF_DEFAULT_OPTS="--height 80%"
 
 # One liner Utils
 alias toplain="perl -pe 's/\x1b\[[0-9;]*[mG]//g'"
 
-abspath() {
-    if [[ -d "$1" ]]
-    then
-        pushd "$1" >/dev/null
-        pwd
-        popd >/dev/null
-    elif [[ -e $1 ]]
-    then
-        pushd "$(dirname "$1")" >/dev/null
-        echo "$(pwd)/$(basename "$1")"
-        popd >/dev/null
-    else
-        echo "$1" does not exist! >&2
-        return 127
+# abspath() {
+#     if [[ -d "$1" ]]
+#     then
+#         pushd "$1" >/dev/null
+#         pwd
+#         popd >/dev/null
+#     elif [[ -e $1 ]]
+#     then
+#         pushd "$(dirname "$1")" >/dev/null
+#         echo "$(pwd)/$(basename "$1")"
+#         popd >/dev/null
+#     else
+#         echo "$1" does not exist! >&2
+#         return 127
+#     fi
+# }
+function abspath() {
+    # generate absolute path from relative path
+    # $1     : relative filename
+    # return : absolute path
+    # From http://stackoverflow.com/a/23002317/514210
+    if [[ -d "$1" ]]; then
+        # dir
+        (cd "$1"; pwd)
+    elif [[ -f "$1" ]]; then
+        # file
+        if [[ $1 == */* ]]; then
+            echo "$(cd "${1%/*}"; pwd)/${1##*/}"
+        else
+            echo "$(pwd)/$1"
+        fi
     fi
 }
 
 alias pwdgr='basename $( abspath $(  git rev-parse --show-cdup && pwd  ) )'
-
-
 
 # @PualIrish {{{
 # who is using the laptops iSight camera?
@@ -177,7 +198,7 @@ cp_p () {
 }
 #}}}
 
-# Thanks! https://github.com/junegunn/dotfiles
+# Chrome History! Thanks! https://github.com/junegunn/dotfiles
 chist() {
   local cols sep
   export cols=$(( COLUMNS / 3 ))
@@ -211,8 +232,8 @@ fzvibe() {
                                 or contact.number is not null 
                                 or contact.name is not null
                               )' |
-                           uniq |
-                           fzf --ansi --multi --no-hscroll --tiebreak=index 
+                          uniq |
+                          fzf --ansi --multi --no-hscroll --tiebreak=index 
 }
 
 # thanks https://unix.stackexchange.com/questions/31414/how-can-i-pass-a-command-line-argument-into-a-shell-script
@@ -220,15 +241,15 @@ csv2tab () {
 	column -s, -t < $1 | less -#2 -N -S
 }
 
-# 
-# Mass replace
-agr () { ag -0 -l "$1" | xargs -0 perl -pi.bak -e "s/$1/$2/g"; }
-
+# Not using
+## Mass replace
+#agr () { ag -0 -l "$1" | xargs -0 perl -pi.bak -e "s/$1/$2/g"; }
 
 # Go Lang
 export GOPATH="$HOME/golang"
 export PATH="$PATH:$GOPATH/bin"
-export GOROOT="$(brew --prefix golang)/libexec"
+#export GOROOT="$(brew --prefix golang)/libexec"
+export GOROOT="${brewprefix}/opt/go/libexec"
 
 # ADB
 export PATH="$PATH:/Users/Odz/Library/Android/sdk/platform-tools"
@@ -253,19 +274,17 @@ alias bupdg="brew update && brew upgrade && brew cleanup && brew doctor && rupst
 export PATH="$HOME/.cargo/bin:$PATH"
 
 # wireshark
-export PATH="$(brew --prefix wireshark)/bin:$PATH"
-
-
+# export PATH="$(brew --prefix wireshark)/bin:$PATH"
+export PATH="${brewprefix}/opt/wireshark/bin:$PATH"
 
 if [ -f "${HOME}/.gnupg/.gpg-agent-info" ]; then
   . "${HOME}/.gnupg/.gpg-agent-info"
   export GPG_AGENT_INFO
 fi
 
-if [ -f $(brew --prefix)/etc/bash_completion ]; then
-. $(brew --prefix)/etc/bash_completion
+if [ -f ${brewprefix}/etc/bash_completion ]; then
+. ${brewprefix}/etc/bash_completion
 fi
-
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
 
