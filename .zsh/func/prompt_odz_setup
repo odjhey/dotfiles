@@ -6,9 +6,7 @@ zgitinit
 
 prompt_odz_help () {
   cat <<'EOF'
-
   prompt odz
-
 EOF
 }
 
@@ -160,30 +158,26 @@ prompt_odz_setup() {
 	typeset -Ag wunjo_prompt_colors
 	wunjo_prompt_colors=(${(kv)pc})
 
-	local p_date p_line p_rc
+#	local p_date p_line
+#	p_date="$pc[date]%D{%Y-%m-%d} $pc[time]%D{%T}$pc[reset]"
+#	p_line="$pc[line]%y$pc[reset]"
 
-	p_date="$pc[date]%D{%Y-%m-%d} $pc[time]%D{%T}$pc[reset]"
-
-	p_line="$pc[line]%y$pc[reset]"
   PROMPT="$pc[reset]"
 
 	if [ $verbose ]; then
 		PROMPT+="$pc[host]odee$pc[reset]"
 	fi
 
-	#if [ ! -z "$(gitrootdir)" ]; then
-    PROMPT+="/$pc[time]\$(gitrootdir)$pc[reset]"
-	#fi
+  PROMPT+="/$pc[time]\$(gitrootdir)$pc[reset]"
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
   PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
-# PROMPT+=" $pc[#]\$$pc[reset] "
   PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT
-	precmd_functions+='prompt_wunjo_precmd'
+	precmd_functions+='prompt_odz_precmd'
 }
 
-prompt_wunjo_precmd() {
+prompt_odz_precmd() {
 	local ex=$?
 	psvar=()
 
@@ -195,7 +189,7 @@ prompt_wunjo_precmd() {
 	fi
 }
 
-prompt_wunjo_scm_status() {
+prompt_odz_scm_status() {
 	zgit_isgit || return
 	local -A pc
 	pc=(${(kv)wunjo_prompt_colors})
@@ -338,5 +332,3 @@ prompt_wunjo_scm_branch() {
 }
 
 prompt_odz_setup "$@"
-
-# vim:set ft=zsh:
