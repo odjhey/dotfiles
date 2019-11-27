@@ -105,17 +105,10 @@ prompt_odzmin_setup() {
 	typeset -Ag wunjo_prompt_colors
 	wunjo_prompt_colors=(${(kv)pc})
 
-	local p_date p_line p_rc
-
-	p_date="$pc[date]%D{%Y-%m-%d} $pc[time]%D{%T}$pc[reset]"
-
-	p_line="$pc[line]%y$pc[reset]"
   PROMPT="$pc[reset]"
-
 	if [ $verbose ]; then
 		PROMPT+="$pc[host]odee$pc[reset]"
 	fi
-
 
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
   PROMPT+=" $pc[#]\$$pc[reset] "
@@ -137,4 +130,3 @@ prompt_odzmin_precmd() {
 }
 
 prompt_odzmin_setup "$@"
-# vim:set ft=zsh:
