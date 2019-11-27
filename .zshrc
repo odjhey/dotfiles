@@ -6,7 +6,7 @@
 #plugins=(zsh-syntax-highlighting cf)
 
 export NVM_LAZY_LOAD=true
-plugins=(zsh-nvm)
+plugins=(zsh-nvm zsh-syntax-highlighting cf)
 
 export ZSH=/Users/Odz/.oh-my-zsh
 source $ZSH/oh-my-zsh.sh
