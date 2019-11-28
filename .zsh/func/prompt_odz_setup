@@ -198,7 +198,7 @@ prompt_current_dir() {
 		then
 # show blank, means prompt has 2nd line
 		else
-	    echo ":^"
+	    echo ":\uf0d8"
 		fi
 	else
 	  if [ $gitrootcharlen -gt 20 ]
@@ -215,7 +215,7 @@ prompt_current_dir_always() {
 # check if home
   if [ "$gitroot" = "$(prompt_odz_basedir)" ]
 	then
-	  echo "^"
+	  echo "\uf0d8"
 	else
 	  echo "%1~"
 	fi
