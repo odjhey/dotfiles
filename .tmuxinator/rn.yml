@@ -1,7 +1,8 @@
 # /Users/Odz/.tmuxinator/TS.yml
 
 name: react-native
-root: .
+root: ~/<%= @settings["workspace"] %>
+attach: false
 
 # Optional tmux socket
 # socket_name: foo
