@@ -99,7 +99,7 @@ fq() {
 # vim
 alias vi="$ZVIM"
 alias vim="$ZVIM"
-alias v="$ZVIM"
+# alias v="$ZVIM"
 alias vipb="pbpaste | vi -"
 vq() {
   $EDITOR `$@`
@@ -271,5 +271,15 @@ fi
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
 
+eval "$(fasd --init auto)"
 
-
+# fasd
+alias j='fasd_cd -d'
+## fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
+unalias z
+unalias zz
+jj() {
+    [ $# -gt 0 ] && fasd_cd -d "$*" && return
+    local dir
+    dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
+}
