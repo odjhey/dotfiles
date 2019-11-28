@@ -37,8 +37,8 @@ Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier'
 Plug 'prettier/vim-prettier' 
 
-
-
+Plug '/usr/local/opt/fzf'
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
