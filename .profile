@@ -12,6 +12,7 @@ export PATH=/Users/Odz/bin/protoc-3.10.1-osx-x86_64/bin:${PATH}
 export PATH=/usr/local/opt/texinfo/bin:${PATH}
 export PATH=/usr/local/sbin:/usr/local/bin:${PATH}
 export PATH="$HOME/bin:$PATH"
+export PATH="$HOME/safe/scripts:$PATH"
 
 # TODO add check if has emacs daemon then use emacsclient else use vim
 export EDITOR=nvim
@@ -80,7 +81,7 @@ ta() {
 }
 
 # ftpane - switch pane (@george-b)
-ftpane() {
+tp() {
   local panes current_window current_pane target target_window target_pane
   panes=$(tmux list-panes -s -F '#I:#P - #{pane_current_path} #{pane_current_command}')
   current_pane=$(tmux display-message -p '#I:#P')
@@ -98,6 +99,8 @@ ftpane() {
     tmux select-window -t $target_window
   fi
 }
+# In tmux.conf
+# bind-key 0 run "tmux split-window -l 12 'bash -ci tp'"
 
 # zle -N ta
 # bindkey '\C-x\C-t' ta
