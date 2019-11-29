@@ -40,6 +40,9 @@ Plug 'prettier/vim-prettier'
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+
 call plug#end()
 
 colorscheme gruvbox
@@ -382,6 +385,7 @@ set concealcursor=nvic
 let g:scroll_position_marker = '⇒' 
 "hi SignColumn           ctermbg=232 
 hi ScrollPositionMarker ctermfg=208 ctermbg=237 
+highlight Pmenu ctermbg=235 guibg=gray
 "hi ScrollPositionMarker guibg=#1a1a1a guifg=#c9c9c9
 
 let g:CommandTFileScanner="git"
@@ -490,9 +494,19 @@ function! FloatingFZF()
         \ 'row': vertical,
         \ 'col': horizontal,
         \ 'width': width,
-        \ 'height': height
+        \ 'height': height,
+	      \ 'style' : 'minimal'
         \ }
 
   " open the new window, floating, and enter to it
   call nvim_open_win(buf, v:true, opts)
 endfunction
+
+
+let g:airline_powerline_fonts = 1
+
+" Does not work in NeoVim
+" https://github.com/powerline/powerline/issues/1287
+" python3 from powerline.vim import setup as powerline_setup
+" python3 powerline_setup()
+" python3 del powerline_setup
