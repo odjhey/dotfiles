@@ -28,6 +28,8 @@ prompt odz
 export HISTSIZE=100000
 export HISTFILE="$HOME/.history"
 export SAVEHIST=$HISTSIZE
+setopt inc_append_history
+setopt share_history
 
 # Oh-my-zsh has this
 ## Use C-x C-e to edit the current command line
