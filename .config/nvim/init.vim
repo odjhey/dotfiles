@@ -53,9 +53,9 @@ set mouse=a
 set hidden                    " allow unsaved background buffers and remember marks/undo for them 
 set history=10000             " remember more commands and search history
 "set expandtab 
-set tabstop=2
-set shiftwidth=2
-set softtabstop=2
+set tabstop=4
+set shiftwidth=4
+set softtabstop=4
 
 syntax on
 filetype plugin indent on
@@ -175,7 +175,8 @@ set norelativenumber
 set encoding=utf-8 nobomb
 set nowrap
 set list   
-set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·,space:.,nbsp:░
+"set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·,space:.,nbsp:░
+set listchars=tab:→\ ,eol:¬,extends:>,precedes:<,trail:·,space:.,nbsp:␣
 "set listchars=
 "set listchars+=tab:·\ 
 "set listchars+=trail:·

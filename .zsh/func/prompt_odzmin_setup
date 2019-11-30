@@ -111,7 +111,7 @@ prompt_odzmin_setup() {
 	fi
 
 	PROMPT+=":$pc[shortpath]%1~$pc[reset]"
-  PROMPT+=" $pc[#]\$$pc[reset] "
+  PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT
 	precmd_functions+='prompt_odzmin_precmd'

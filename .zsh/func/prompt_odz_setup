@@ -182,7 +182,7 @@ prompt_odz_setup() {
   PROMPT+="$pc[shortpath]\$(prompt_current_dir)$pc[reset]"
   PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
   PROMPT+="\$(prompt_has_newline)$pc[#]"
-  PROMPT+=" $pc[#]\$$pc[reset] "
+  PROMPT+=" $pc[#]\$$pc[reset] "
 
 	export PROMPT RPROMPT
 	precmd_functions+='prompt_odz_precmd'

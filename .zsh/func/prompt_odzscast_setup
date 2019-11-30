@@ -182,7 +182,7 @@ prompt_odzscast_setup() {
   PROMPT+=":$pc[shortpath]%1~$pc[reset]"
   PROMPT+="\$(prompt_odzscast_scm_info)$pc[reset]"
   PROMPT+="
-$pc[#]\$$pc[reset] "
+$pc[#]\$$pc[reset] "
 
   export PROMPT RPROMPT
   precmd_functions+='prompt_odzscast_precmd'
