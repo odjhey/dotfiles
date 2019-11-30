@@ -102,8 +102,9 @@ tp() {
 # In tmux.conf
 # bind-key 0 run "tmux split-window -l 12 'bash -ci tp'"
 
-# zle -N ta
-# bindkey '\C-x\C-t' ta
+
+zle -N ta
+bindkey '^[0' ta
 
 # git
 alias g='git'
@@ -157,7 +158,7 @@ alias surround="sed -e \"s/\\(.*\\)/'\\1'/\""
 alias strip-ht="col -xb"
 
 # fast conf edit
-alias vimrc="$EDITOR ~/.vim/vimrc"
+# alias vimrc="$EDITOR ~/.vim/vimrc"
 alias nvimrc="$EDITOR ~/.config/nvim/init.vim"
 alias zshrc="$EDITOR ~/.zshrc"
 alias bashrc="$EDITOR ~/.bashrc"
@@ -307,14 +308,11 @@ fi
 
 export JAVA_HOME="/Library/Java/JavaVirtualMachines/jdk1.8.0_131.jdk/Contents/Home"
 
-eval "$(fasd --init auto)"
+eval "$(fasd --init zsh-hook zsh-ccomp zsh-ccomp-install zsh-wcomp zsh-wcomp-install)"
 
 # fasd
-alias j='fasd_cd -d'
 ## fasd & fzf change directory - jump using `fasd` if given argument, filter output of `fasd` using `fzf` else
-unalias z
-unalias zz
-jj() {
+j() {
     [ $# -gt 0 ] && fasd_cd -d "$*" && return
     local dir
     dir="$(fasd -Rdl "$1" | fzf -1 -0 --no-sort +m)" && cd "${dir}" || return 1
