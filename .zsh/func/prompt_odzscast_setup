@@ -42,7 +42,7 @@ colorword() {
 
 gitrootdir() {
 #	basename $( abspath $(  git rev-parse --show-cdup ) 2>/dev/null || pwd )  2>/dev/null
-  basename $(  git rev-parse --show-toplevel )
+  basename $(  git rev-parse --show-toplevel 2>/dev/null || pwd)
 }
 
 function minutes_since_last_commit {
