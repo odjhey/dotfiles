@@ -136,7 +136,7 @@ set re=1
 nnoremap <c-t> :FZF<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
-nnoremap <c-b> :Buffer<CR>
+nnoremap <c-f> :Buffer<CR>
 "}}}
 
 "insert new line
@@ -144,7 +144,7 @@ map <leader><Enter> o<ESC>
 
 " Ag instead of Ack
 if executable('ag')
-  let g:ackprg = 'ag --vimgrep'
+    let g:ackprg = 'ag --vimgrep'
 endif
 
 " min split heights
@@ -194,21 +194,21 @@ set fillchars=vert:▒
 set background=dark
 
 if has('gui_running')
-  colorscheme solarized
-  "I dont like the default Solarized background
-  hi Normal guibg=#1c1c1c
-  hi Normal guifg=#c9c9c9
-  hi LineNr guibg=#1a1a1a
-  hi LineNr guifg=#c9c9c9
+    colorscheme solarized
+    "I dont like the default Solarized background
+    hi Normal guibg=#1c1c1c
+    hi Normal guifg=#c9c9c9
+    hi LineNr guibg=#1a1a1a
+    hi LineNr guifg=#c9c9c9
 else
-  "colorscheme pablo
-  "colorscheme badwolf
-  let g:gruvbox_contrast_dark = "hard"
-  let g:gruvbox_contrast_soft = "hard"
-  colorscheme gruvbox
-  "colorscheme sift
-  "colorscheme base
-  "colorscheme luna-term
+    "colorscheme pablo
+    "colorscheme badwolf
+    let g:gruvbox_contrast_dark = "hard"
+    let g:gruvbox_contrast_soft = "hard"
+    colorscheme gruvbox
+    "colorscheme sift
+    "colorscheme base
+    "colorscheme luna-term
 endif
 
 "always show filename above status bar
@@ -265,11 +265,11 @@ set foldtext=MyFoldText()
 " Make sure Vim returns to the same line when you reopen a file. check
 " vimhelp see last-position-jump
 augroup vimrcEx
-  autocmd!
-  autocmd BufReadPost *
-      \ if line("'\"") > 0 && line("'\"") <= line("$") |
-      \     execute 'normal! g`"zvzz' |
-      \ endif
+    autocmd!
+    autocmd BufReadPost *
+                \ if line("'\"") > 0 && line("'\"") <= line("$") |
+                \     execute 'normal! g`"zvzz' |
+                \ endif
 augroup END
 
 " }}}
@@ -287,15 +287,15 @@ set nostartofline
 " Remove smart quotes, etc.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! RemoveFancyCharacters()
-  let typo = {}
-  let typo["“"] = '"'
-  let typo["”"] = '"'
-  let typo["‘"] = "'"
-  let typo["’"] = "'"
-  let typo["–"] = '--'
-  let typo["—"] = '---'
-  let typo["…"] = '...'
-  :exe ":%s/".join(keys(typo),'\|').'/\=typo[submatch(0)]/ge'
+    let typo = {}
+    let typo["“"] = '"'
+    let typo["”"] = '"'
+    let typo["‘"] = "'"
+    let typo["’"] = "'"
+    let typo["–"] = '--'
+    let typo["—"] = '---'
+    let typo["…"] = '...'
+    :exe ":%s/".join(keys(typo),'\|').'/\=typo[submatch(0)]/ge'
 endfunction
 "don't need this for now
 "command! RemoveFancyCharacters :call RemoveFancyCharacters()
@@ -305,12 +305,12 @@ endfunction
 " Indent if we're at the beginning of a line. Else, do completion.
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! InsertTabWrapper()
-  let col = col('.') - 1
-  if !col || getline('.')[col - 1] !~ '\k'
-    return "\<tab>"
-  else
-    return "\<c-p>"
-  endif
+    let col = col('.') - 1
+    if !col || getline('.')[col - 1] !~ '\k'
+        return "\<tab>"
+    else
+        return "\<c-p>"
+    endif
 endfunction
 " inoremap <expr> <tab> InsertTabWrapper()
 " inoremap <s-tab> <c-n>
@@ -319,13 +319,13 @@ endfunction
 " RENAME CURRENT FILE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 function! RenameFile()
-  let old_name = expand('%')
-  let new_name = input('New file name: ', expand('%'), 'file')
-  if new_name != '' && new_name != old_name
-    exec ':saveas ' . new_name
-    exec ':silent !rm ' . old_name
-    redraw!
-  endif
+    let old_name = expand('%')
+    let new_name = input('New file name: ', expand('%'), 'file')
+    if new_name != '' && new_name != old_name
+        exec ':saveas ' . new_name
+        exec ':silent !rm ' . old_name
+        redraw!
+    endif
 endfunction
 map <leader>n :call RenameFile()<cr>
 "}}}
@@ -398,35 +398,35 @@ let g:CommandTFileScanner="git"
 "let g:Powerline_symbols = 'fancy'
 "let g:Powerline_colorscheme = 'solarized256'
 let g:lightline = {
-      \ 'colorscheme': 'gruvbox',
-      \ '': {
-      \   'left': [['mode', 'paste'], 
-      \            ['readonly', 'filename', 'modified']]
-      \ },
-      \ }
+            \ 'colorscheme': 'gruvbox',
+            \ '': {
+            \   'left': [['mode', 'paste'], 
+            \            ['readonly', 'filename', 'modified']]
+            \ },
+            \ }
 
 
 " october 2017
 cnoremap %% <C-R>=expand('%:h').'/'<cr>
 
 let g:rbpt_colorpairs = [
-    \ ['brown',       'RoyalBlue3'],
-    \ ['Darkblue',    'SeaGreen3'],
-    \ ['darkgray',    'DarkOrchid3'],
-    \ ['darkgreen',   'firebrick3'],
-    \ ['darkcyan',    'RoyalBlue3'],
-    \ ['darkred',     'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['brown',       'firebrick3'],
-    \ ['gray',        'RoyalBlue3'],
-    \ ['black',       'SeaGreen3'],
-    \ ['darkmagenta', 'DarkOrchid3'],
-    \ ['Darkblue',    'firebrick3'],
-    \ ['darkgreen',   'RoyalBlue3'],
-    \ ['darkcyan',    'SeaGreen3'],
-    \ ['darkred',     'DarkOrchid3'],
-    \ ['red',         'firebrick3'],
-    \ ]
+            \ ['brown',       'RoyalBlue3'],
+            \ ['Darkblue',    'SeaGreen3'],
+            \ ['darkgray',    'DarkOrchid3'],
+            \ ['darkgreen',   'firebrick3'],
+            \ ['darkcyan',    'RoyalBlue3'],
+            \ ['darkred',     'SeaGreen3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+            \ ['brown',       'firebrick3'],
+            \ ['gray',        'RoyalBlue3'],
+            \ ['black',       'SeaGreen3'],
+            \ ['darkmagenta', 'DarkOrchid3'],
+            \ ['Darkblue',    'firebrick3'],
+            \ ['darkgreen',   'RoyalBlue3'],
+            \ ['darkcyan',    'SeaGreen3'],
+            \ ['darkred',     'DarkOrchid3'],
+            \ ['red',         'firebrick3'],
+            \ ]
 let g:rbpt_max = 16
 let g:rbpt_loadcmd_toggle = 0
 
@@ -453,14 +453,14 @@ packadd! matchit
 "let g:UltiSnipsJumpForwardTrigger="<c-b>"
 "let g:UltiSnipsJumpBackwardTrigger="<c-z>"
 
-  let g:deoplete#enable_at_startup = 1
+let g:deoplete#enable_at_startup = 1
 
 
 "ALE
 let g:ale_fixers = {
- \ 'javascript': ['eslint'],
- \ 'typescript': ['eslint']
- \ }
+            \ 'javascript': ['eslint'],
+            \ 'typescript': ['eslint']
+            \ }
 
 let g:ale_sign_error = '❌'
 let g:ale_sign_warning = '⚠️'
@@ -477,30 +477,30 @@ let g:fzf_layout = { 'window': 'call FloatingFZF()' }
 
 " Function to create the custom floating window
 function! FloatingFZF()
-  " creates a scratch, unlisted, new, empty, unnamed buffer
-  " to be used in the floating window
-  let buf = nvim_create_buf(v:false, v:true)
+    " creates a scratch, unlisted, new, empty, unnamed buffer
+    " to be used in the floating window
+    let buf = nvim_create_buf(v:false, v:true)
 
-  " 90% of the height
-  let height = float2nr(&lines * 0.9)
-  " 60% of the height
-  let width = float2nr(&columns * 0.6)
-  " horizontal position (centralized)
-  let horizontal = float2nr((&columns - width) / 2)
-  " vertical position (one line down of the top)
-  let vertical = 1
+    " 90% of the height
+    let height = float2nr(&lines * 0.9)
+    " 60% of the height
+    let width = float2nr(&columns * 0.6)
+    " horizontal position (centralized)
+    let horizontal = float2nr((&columns - width) / 2)
+    " vertical position (one line down of the top)
+    let vertical = 1
 
-  let opts = {
-        \ 'relative': 'editor',
-        \ 'row': vertical,
-        \ 'col': horizontal,
-        \ 'width': width,
-        \ 'height': height,
-	      \ 'style' : 'minimal'
-        \ }
+    let opts = {
+                \ 'relative': 'editor',
+                \ 'row': vertical,
+                \ 'col': horizontal,
+                \ 'width': width,
+                \ 'height': height,
+                \ 'style' : 'minimal'
+                \ }
 
-  " open the new window, floating, and enter to it
-  call nvim_open_win(buf, v:true, opts)
+    " open the new window, floating, and enter to it
+    call nvim_open_win(buf, v:true, opts)
 endfunction
 
 
