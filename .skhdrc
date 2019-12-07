@@ -1,6 +1,6 @@
 # open terminal
  cmd + alt - return : /Applications/Kitty.app/Contents/MacOS/kitty --single-instance -d ~
- cmd - 0x35 : /Applications/Mission\ Control.app/Contents/MacOS/Mission\ Control 2
+ cmd - 0x35 : /System/Applications/Mission\ Control.app/Contents/MacOS/Mission\ Control 2
 
 
  
