@@ -110,6 +110,7 @@ bindkey '^[0' ta
 alias g='git'
 alias cdgr='[ ! -z `git rev-parse --show-cdup` ] && cd `git rev-parse --show-cdup || pwd`'
 alias gitv='git log --graph --format="%C(auto)%h%d %s %C(black)%C(bold)%cr"'
+alias g_nah='git reset --hard;git clean -df'
 gitclone() {
     rm -rf `basename $1 .git`
     git clone $1
@@ -141,6 +142,38 @@ alias vipb="pbpaste | vi -"
 vq() {
   $EDITOR `$@`
 }
+
+
+
+# Utils
+alias kill_chrome="ps ux | grep '[C]hrome Helper (Renderer)' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"# Dummy
+# Extract most know archives with one command
+# TY https://hackernoon.com/personal-macos-workspace-setup-adf61869cd79
+extract () {
+  if [ -f $1 ] ; then
+    case $1 in
+      *.tar.bz2)   tar xjf $1     ;;
+      *.tar.gz)    tar xzf $1     ;;
+      *.bz2)       bunzip2 $1     ;;
+      *.rar)       unrar e $1     ;;
+      *.gz)        gunzip $1      ;;
+      *.tar)       tar xf $1      ;;
+      *.tbz2)      tar xjf $1     ;;
+      *.tgz)       tar xzf $1     ;;
+      *.zip)       unzip $1       ;;
+      *.Z)         uncompress $1  ;;
+      *.7z)        7z x $1        ;;
+      *)     echo "'$1' cannot be extracted via extract()" ;;
+    esac
+  else
+    echo "'$1' is not a valid file"
+  fi
+}
+
+# Texts
+alias shrug="printf '¯\_(ツ)_/¯' | pbcopy"
+alias tflip="printf '(╯°□°)╯︵ ┻━┻' | pbcopy"
+alias fightme="printf '(ง'̀-'́)ง' | pbcopy"
 
 # emacs
 alias e="emacsclient -c"

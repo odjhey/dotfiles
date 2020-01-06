@@ -9,7 +9,7 @@ Plug 'pangloss/vim-javascript'
 Plug 'mxw/vim-jsx'
 
 "syntax typescript
-Plug 'HerringtonDarkholme/yats'
+"Plug 'HerringtonDarkholme/yats' "parens in const a = b() freezes nvim ;'(
 Plug 'peitalin/vim-jsx-typescript' "syntax highlight
 Plug 'leafgarland/typescript-vim'
 
@@ -22,26 +22,39 @@ Plug 'morhetz/gruvbox'
 "keys
 Plug 'tpope/vim-surround'
 Plug 'mattn/emmet-vim'
+Plug 'easymotion/vim-easymotion'
 
-"services
-Plug 'w0rp/ale'
+" - SERVICES - 
+" show lint in gutter
+" Plug 'w0rp/ale'
+" like gitgutter
 Plug 'mhinz/vim-signify'
-" Plug 'mhartington/nvim-typescript', {'do': './install.sh'}
+"Plug 'mhartington/nvim-typescript', {'do': './install.sh'} "error, some
+"commands missing
 " For async completion
-Plug 'Shougo/deoplete.nvim'
+" Plug 'Shougo/deoplete.nvim'
 " For Denite features
-Plug 'Shougo/denite.nvim'
+" Plug 'Shougo/denite.nvim'
 
 "formatters
 Plug 'editorconfig/editorconfig-vim'
 Plug 'prettier/vim-prettier'
-Plug 'prettier/vim-prettier' 
 
 Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
+
+"Plug 'SirVer/ultisnips'
+"Plug 'ycm-core/YouCompleteMe'
+"Plug 'honza/vim-snippets'
+
+
+"rust
+Plug 'rust-lang/rust.vim'
+Plug 'racer-rust/vim-racer'
+
 
 call plug#end()
 
@@ -66,9 +79,55 @@ set incsearch
 set hlsearch
 set ignorecase smartcase " make searches case-sensitive only if they contain upper-case characters
 set title " show filename on titlebar
-" unhighlight on Enter
-"
-nnoremap <CR> :nohlsearch<CR> 
+
+"" unhighlight on Enter
+"nnoremap <CR> :nohlsearch<CR> 
+" Repeat last macro if in a normal buffer. Thanks @wincent
+nnoremap <expr> <CR> empty(&buftype) ? '@@' : '<CR>'
+noremap <silent> <Up> :cprevious<CR>
+nnoremap <silent> <Down> :cnext<CR>
+nnoremap <silent> <Left> :cpfile<CR>
+nnoremap <silent> <Right> :cnfile<CR>
+" Store relative line number jump in the jumplist if they exceed a threshold
+nnoremap <expr> k (v:count > 5 ? "m'" . v:count : '') . 'k'
+nnoremap <expr> j (v:count > 5 ? "m'" . v:count : '') . 'j'
+
+nnoremap <Leader>o :only<CR>
+nnoremap <Leader>w :write<CR>
+nnoremap <Leader>x :xit<CR>
+nnoremap <Leader>q :quit<CR>
+
+" Cycle through relativenumber + number, number (only), and no numbering.
+function! Cycle_numbering() abort
+  if exists('+relativenumber')
+    execute {
+          \ '00': 'set relativenumber   | set number',
+          \ '01': 'set norelativenumber | set number',
+          \ '10': 'set norelativenumber | set nonumber',
+          \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
+  else
+    " No relative numbering, just toggle numbers on and off.
+    set number!
+  endif
+endfunction
+nnoremap <silent> <Leader>r :call Cycle_numbering()<CR>
+
+
+
+" Cycle through relativenumber + number, number (only), and no numbering.
+function! Cycle_numbering() abort
+  if exists('+relativenumber')
+    execute {
+          \ '00': 'set relativenumber   | set number',
+          \ '01': 'set norelativenumber | set number',
+          \ '10': 'set norelativenumber | set nonumber',
+          \ '11': 'set norelativenumber | set number' }[&number . &relativenumber]
+  else
+    " No relative numbering, just toggle numbers on and off.
+    set number!
+  endif
+endfunction
+
 
 set report=0    " Report the number of lines changed. (substitute)
 set ttyfast
@@ -126,17 +185,18 @@ set t_ti= t_te=
 " slower with the new regex engine.
 set re=1
 
-" disable for now:  Move around splits with <c-hjkl>
-"nnoremap <c-j> <c-w>j
-"nnoremap <c-k> <c-w>k
-"nnoremap <c-h> <c-w>h
-"nnoremap <c-l> <c-w>l
+" reenable: disable for now:  Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
 
 " FZF {{{
 nnoremap <c-t> :FZF<CR>
 imap <c-x><c-f> <plug>(fzf-complete-path)
 imap <c-x><c-l> <plug>(fzf-complete-line)
 nnoremap <c-f> :Buffer<CR>
+nnoremap <c-s> :BLines<CR>
 "}}}
 
 "insert new line
@@ -216,7 +276,7 @@ set laststatus=2
 "}}}
 " Bind Wanted Keys {{{
 "remaps
-"let mapleader = "\\"
+let maplocalleader = "\\"
 let mapleader = " "
 "inoremap <c-s> <Esc>:w<CR>
 "noremap <Tab> %
@@ -380,7 +440,6 @@ set concealcursor=nvic
 "syntax keyword function function conceal cchar=λ
 "syntax keyword vartest var conceal cchar=#
 
-"let g:UltiSnipsEditSplit="vertical"
 
 "let g:scroll_position_auto_enable=0
 let g:scroll_position_marker = '⇒' 
@@ -449,12 +508,11 @@ let g:surround_{char2nr('^')} = "/^\r$/"
 packadd! matchit
 
 " Trigger configuration. Do not use <tab> if you use https://github.com/Valloric/YouCompleteMe.
-"let g:UltiSnipsExpandTrigger="<tab>"
-"let g:UltiSnipsJumpForwardTrigger="<c-b>"
-"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+let g:UltiSnipsExpandTrigger="<tab>"
+let g:UltiSnipsJumpForwardTrigger="<tab>"
+let g:UltiSnipsEditSplit="vertical"
 
 let g:deoplete#enable_at_startup = 1
-
 
 "ALE
 let g:ale_fixers = {
@@ -503,6 +561,11 @@ function! FloatingFZF()
     call nvim_open_win(buf, v:true, opts)
 endfunction
 
+" Easymotion
+"let g:EasyMotion_do_mapping = 0 " Disable default mappings
+"do :h easymotion you dummy
+"let g:EasyMotion_smartcase = 1
+
 
 let g:airline_powerline_fonts = 1
 
@@ -511,3 +574,14 @@ let g:airline_powerline_fonts = 1
 " python3 from powerline.vim import setup as powerline_setup
 " python3 powerline_setup()
 " python3 del powerline_setup
+
+
+" Rust
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
+
+nnoremap <LocalLeader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
+
