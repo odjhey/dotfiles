@@ -200,3 +200,5 @@ bin/protoc-3.10.1-osx-x86_64/
 prof-d3a3*cpuprofile.txt
 
 .fasd
+.haxe/
+.haxelib
