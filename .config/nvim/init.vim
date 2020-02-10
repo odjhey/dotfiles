@@ -46,7 +46,7 @@ Plug 'junegunn/fzf.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-"Plug 'SirVer/ultisnips'
+Plug 'SirVer/ultisnips'
 "Plug 'ycm-core/YouCompleteMe'
 "Plug 'honza/vim-snippets'
 
@@ -566,6 +566,7 @@ endfunction
 "do :h easymotion you dummy
 "let g:EasyMotion_smartcase = 1
 
+let g:python3_host_prog='/usr/local/opt/python/libexec/bin/python'
 
 let g:airline_powerline_fonts = 1
 
