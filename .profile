@@ -120,6 +120,9 @@ gitclone() {
     git reset --hard $2
 }
 
+# 
+alias gdiff='git diff --no-index'
+
 # yarn
 alias y='yarn'
 

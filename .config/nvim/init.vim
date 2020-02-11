@@ -61,11 +61,13 @@ call plug#end()
 colorscheme gruvbox
 set signcolumn=yes:2
 
+set background=dark
+
 set mouse=a
 
 set hidden                    " allow unsaved background buffers and remember marks/undo for them 
 set history=10000             " remember more commands and search history
-"set expandtab 
+set expandtab 
 set tabstop=4
 set shiftwidth=4
 set softtabstop=4
@@ -251,7 +253,6 @@ set fillchars=vert:▒
 "elseif has("gui_running")
 "  set guifont=Consolas:h10
 "endif
-set background=dark
 
 if has('gui_running')
     colorscheme solarized
@@ -585,4 +586,13 @@ au FileType rust nmap <leader>gd <Plug>(rust-doc)
 
 
 nnoremap <LocalLeader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
+
+if &diff
+colorscheme gruvbox
+set signcolumn=
+set nolist
+set diffexpr=""
+set diffopt+=iwhiteall
+set diffopt+=icase
+endif
 
