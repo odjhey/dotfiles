@@ -181,8 +181,14 @@ prompt_odz_setup() {
   PROMPT+="/$pc[time]\$(gitrootdir)$pc[reset]"
   PROMPT+="$pc[shortpath]\$(prompt_current_dir)$pc[reset]"
   PROMPT+="\$(prompt_odz_scm_info)$pc[reset]"
-  PROMPT+="\$(prompt_has_newline)$pc[#]"
-  PROMPT+=" $pc[#]\$$pc[reset] "
+  PROMPT+="\$(prompt_has_newline)"
+  #Add jobs count
+  #PROMPT+='`if [ -n "$(jobs -p)" ]; then echo " $(jobs -sp | wc -l | awk '"'"'{print $1 }'"'"')"; fi`'
+  #PROMPT+='`if [ -n "$(jobs -p)" ]; then echo " $(jobs -sp | wc -l | tr -d " ")"; fi`'
+  PROMPT+='$pc[host]`if [ -n "$(jobs -p)" ]; then echo "+"; else echo " "; fi`'
+
+  PROMPT+="$pc[#]\$$pc[reset] "
+
 
 	export PROMPT RPROMPT
 	precmd_functions+='prompt_odz_precmd'

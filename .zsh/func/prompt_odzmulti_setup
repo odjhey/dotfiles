@@ -181,6 +181,12 @@ prompt_odzmulti_setup() {
   PROMPT+="/$pc[time]\$(gitrootdir)$pc[reset]"
   PROMPT+=":$pc[shortpath]%1~$pc[reset]"
   PROMPT+="\$(prompt_odzmulti_scm_info)$pc[reset]"
+
+
+  #Add jobs count
+  #PROMPT+='`if [ -n "$(jobs -p)" ]; then echo " $(jobs -sp | wc -l | awk '"'"'{print $1 }'"'"')"; fi`'
+  #PROMPT+='`if [ -n "$(jobs -p)" ]; then echo " $(jobs -sp | wc -l | tr -d " ")"; fi`'
+  PROMPT+='$pc[host]`if [ -n "$(jobs -p)" ]; then echo "+"; fi`'
   PROMPT+="
 $pc[#]\$$pc[reset] "
 
