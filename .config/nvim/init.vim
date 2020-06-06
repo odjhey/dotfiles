@@ -21,6 +21,7 @@ Plug 'morhetz/gruvbox'
 
 "keys
 Plug 'tpope/vim-surround'
+Plug 'tpope/vim-repeat'
 Plug 'mattn/emmet-vim'
 Plug 'easymotion/vim-easymotion'
 
@@ -59,7 +60,7 @@ Plug 'racer-rust/vim-racer'
 call plug#end()
 
 colorscheme gruvbox
-set signcolumn=yes:2
+"set signcolumn=yes:2
 
 set background=dark
 
@@ -69,13 +70,13 @@ set hidden                    " allow unsaved background buffers and remember ma
 set history=10000             " remember more commands and search history
 set expandtab 
 set tabstop=4
-set shiftwidth=4
+set shiftwidth=2
 set softtabstop=4
 
 syntax on
 filetype plugin indent on
 
-set autoindent " follow indent of previous line
+"set autoindent " follow indent of previous line
 set scrolloff=5
 set incsearch
 set hlsearch
@@ -590,9 +591,57 @@ nnoremap <LocalLeader>e :edit <C-R>=expand('%:p:h') . '/'<CR>
 if &diff
 colorscheme gruvbox
 set signcolumn=
-set nolist
+"set nolist
 set diffexpr=""
 set diffopt+=iwhiteall
 set diffopt+=icase
 endif
 
+
+"hi SpecialKey cterm=NONE ctermfg=darkgray ctermbg=NONE
+"hi NonText ctermfg=NONE
+"hi Visual term=reverse cterm=reverse guibg=Grey
+hi Visual cterm=NONE ctermbg=241 ctermfg=NONE guibg=Grey40
+
+hi DiffAdd    cterm=NONE ctermbg=23  ctermfg=NONE   guibg=Grey40
+hi DiffDelete cterm=NONE ctermbg=52   ctermfg=NONE guibg=Grey40
+
+hi DiffChange cterm=NONE ctermbg=53 ctermfg=NONE guibg=Grey40
+hi DiffText   cterm=NONE ctermbg=58 ctermfg=NONE guibg=Grey40
+
+"hi VertSplit ctermfg=darkgray ctermbg=NONE
+"
+"hi ALEError cterm=underline ctermfg=red
+"hi ALEErrorSign cterm=underline ctermfg=red
+"hi ALEWarning cterm=underline ctermfg=yellow
+"hi ALEWarningSign cterm=underline ctermfg=yellow
+
+
+
+
+
+
+"let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 20
+"augroup ProjectDrawer
+"  autocmd!
+"  autocmd VimEnter * :Vexplore
+"augroup END
+
+augroup Racer
+    autocmd!
+    autocmd FileType rust nmap <buffer> gd         <Plug>(rust-def)
+    autocmd FileType rust nmap <buffer> gs         <Plug>(rust-def-split)
+    autocmd FileType rust nmap <buffer> gx         <Plug>(rust-def-vertical)
+    autocmd FileType rust nmap <buffer> gt         <Plug>(rust-def-tab)
+    autocmd FileType rust nmap <buffer> <leader>gd <Plug>(rust-doc)
+augroup END
+
+"augroup javascript_folding
+"    au!
+"    au FileType javascript setlocal autoindent=off
+"    au FileType javascript setlocal foldmethod=syntax
+"augroup END
