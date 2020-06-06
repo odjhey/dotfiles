@@ -33,6 +33,10 @@ export PATH=$gembin:$PATH
 
 alias python3="/usr/local/opt/python/libexec/bin/python"
 
+export PATH="$PATH:$HOME/Library/Python/3.7/bin"
+
+export PATH="$PATH:$HOME/.apollo/bin"
+
 # rm, cp, mv
 alias mv="mv -v"
 alias cp="cp -v"
@@ -48,6 +52,7 @@ alias cdd="cd $HOME/Desktop"
 alias cdb="cd $HOME/Desktop/brildeas"
 alias cddl="cd $HOME/Downloads"
 alias cdp="cd $HOME/proj"
+alias cdo="cd $HOME/onion"
 alias cdft="cd $HOME/Desktop/ftmonorepo"
 cdgo() {
   cd "$GOPATH/src/github.com/"
@@ -56,6 +61,10 @@ cdgo() {
     cd "$@"
   fi
 }
+
+#search
+#make smart case default
+alias rg="rg -S"
 
 # ls
 # use coreutils ls if available
@@ -119,9 +128,17 @@ gitclone() {
     cd `basename $1 .git`
     git reset --hard $2
 }
+alias gopen="git remote -v | cut -f2 | grep fetch | cut -f1 -d ' ' | xargs open"
+
 
 # 
 alias gdiff='git diff --no-index'
+
+# clipboard utils
+alias rimtab="pbpaste | sed -e 's/$(printf '\t')/ /g' | pbcopy"
+
+
+
 
 # yarn
 alias y='yarn'
@@ -147,6 +164,11 @@ alias vipb="pbpaste | vi -"
 vq() {
   $EDITOR `$@`
 }
+alias cdvswaps="cd ~/.vim/swaps && ls -l"
+
+alias lsvswaps="ls -l ~/.vim/swaps"
+alias cdvswaps="cd ~/.vim/swaps && ls -l"
+alias rmvswaps="rm -rf ~/.vim/swaps/*"
 
 
 
@@ -181,7 +203,7 @@ alias tflip="printf '(╯°□°)╯︵ ┻━┻' | pbcopy"
 alias fightme="printf '(ง'̀-'́)ง' | pbcopy"
 
 # emacs
-alias e="emacsclient -c"
+alias e="emacsclient -c -F '((fullscreen . maximized))'"
 alias ec="emacsclient"
 alias ecli="emacs -nw"
 alias bemacsd="brew services restart emacs-plus"
@@ -369,3 +391,11 @@ j() {
 
 # HAXE
 export HAXE_STD_PATH="/usr/local/lib/haxe/std"
+
+
+# Backup history
+
+if [ -f ${HOME}/bin/scripts/backup_hist.sh ]; then
+    backup_hist.sh
+fi
+export PATH="$HOME/.apollo/bin:$PATH"
