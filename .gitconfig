@@ -6,10 +6,12 @@
 [core]
 	editor = vim
 	excludesfile = /Users/Odz/.gitignore_global
+    pager = delta --plus-color="#012800" --minus-color="#340001" --theme='Monokai Extended'
+
 [merge]
   tool = vimdiff
 [alias]
-  l=log --pretty=oneline
+  l=log --oneline
   s=status
   cm=commit -m
   amend=commit --amend
@@ -26,3 +28,5 @@
 	required = true
 [credential]
 	helper = osxkeychain
+[interactive]
+    diffFilter = delta --color-only
