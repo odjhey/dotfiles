@@ -1,11 +1,11 @@
 
-;; Frame
-(add-to-list 'default-frame-alist
-			 '(ns-transparent-titlebar . t))
+;;;; Frame
 ;;(add-to-list 'default-frame-alist
-;;         '(ns-appearance . dark)) ;; or dark - depending on your theme
-(add-to-list 'default-frame-alist '(undecorated . t))
-;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
+;;			 '(ns-transparent-titlebar . t))
+;;;;(add-to-list 'default-frame-alist
+;;;;         '(ns-appearance . dark)) ;; or dark - depending on your theme
+;;(add-to-list 'default-frame-alist '(undecorated . t))
+;;;;(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
 
 ;; shell
