@@ -202,3 +202,12 @@ prof-d3a3*cpuprofile.txt
 .fasd
 .haxe/
 .haxelib
+.history*
+.apollo
+.aws
+.circleci
+.flipper
+.dat
+onion
+brildeas
+.npmrc
