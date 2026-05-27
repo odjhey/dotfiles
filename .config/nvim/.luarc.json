@@ -1,0 +1,10 @@
+{
+  "workspace": {
+    "library": [
+      "$VIMRUNTIME",
+      "~/.local/share/nvim/lazy/blink.cmp"
+    ],
+    "checkThirdParty": false
+  }
+}
+

@@ -22,7 +22,8 @@
 .clojure_history
 golang/
 .cocoapods/
-.config/
+.config/*
+!.config/nvim
 .cups/
 .dart/
 .dartServer/
